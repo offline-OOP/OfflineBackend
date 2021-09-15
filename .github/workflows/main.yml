@@ -64,4 +64,4 @@ jobs:
         run: |
           docker login -u $CI_REPOSITORY_NAME -p $CI_REPOSITORY_PASSWORD
           docker-compose -f docker-compose.test.yaml up -d mysql
-          docker-compose -f docker-compose.test.yaml run app  sh -c "npx nestjs-command db:wait && ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js "migration:run" --config "ormconfigremote.json" && npm run test"
+          docker-compose -f docker-compose.test.yaml run app  sh -c "npx nestjs-command db:wait && npx ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js "migration:run" --config "ormconfigremote.json" && npm run test"

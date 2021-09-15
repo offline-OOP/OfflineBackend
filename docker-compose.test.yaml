@@ -10,7 +10,7 @@ services:
       DATABASE_USERNAME: app
       DATABASE_PASSWORD: app
       DATABASE_NAME: app
-    command: sh -c "npx nestjs-command db:wait && ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js "migration:run" --config "ormconfigremote.json" && npm run test"
+    command: sh -c "npx nestjs-command db:wait && npx ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js "migration:run" --config "ormconfigremote.json" && npm run test"
     networks:
       - default
   mysql:
