@@ -14,6 +14,7 @@ export class DbWaitCommand {
   async wait() {
     for (let i = 0; i < this.tries; i++) {
       try {
+        console.log('Checking connection to db');
         await this.connection.query('SHOW TABLES');
         break;
       } catch (e) {

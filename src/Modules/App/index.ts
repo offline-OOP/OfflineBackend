@@ -4,6 +4,7 @@ import { User } from '#Entities/User';
 import { AuthModule } from '#Modules/Auth';
 import { UsersModule } from '#Modules/User';
 import { CommandModule } from 'nestjs-command';
+import { DbWaitCommand } from '#Commands/WaitDb';
 
 @Module({
   imports: [
@@ -20,5 +21,6 @@ import { CommandModule } from 'nestjs-command';
     UsersModule,
     CommandModule,
   ],
+  providers: [DbWaitCommand],
 })
 export class Index {}
