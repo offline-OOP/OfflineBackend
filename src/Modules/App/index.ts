@@ -6,7 +6,6 @@ import { UsersModule } from '#Modules/User';
 import { CommandModule } from 'nestjs-command';
 import { DbWaitCommand } from '#Commands/WaitDb';
 
-console.log('ENV: ', process.env);
 @Module({
   imports: [
     TypeOrmModule.forRoot({
