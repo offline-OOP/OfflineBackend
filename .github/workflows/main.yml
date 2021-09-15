@@ -63,5 +63,5 @@ jobs:
       - name: Testing app
         run: |
           docker login -u $CI_REPOSITORY_NAME -p $CI_REPOSITORY_PASSWORD
-          docker-compose -f docker-compose.test.yaml up -d mysql redis
+          docker-compose -f docker-compose.test.yaml up -d mysql
           docker-compose -f docker-compose.test.yaml run app  sh -c "sleep 20 && npm run migration:run && npm run test"
