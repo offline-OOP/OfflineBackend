@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  app:
+    image: $APP_IMAGE
+    environment:
+      NODE_ENV: development
+      DATABASE_HOST: mysql
+      DATABASE_PORT: 3306
+      DATABASE_USERNAME: app
+      DATABASE_PASSWORD: app
+      DATABASE_NAME: app
+    command: sh -c "npm run migration:run && npm run test"
+    networks:
+      - default
+  mysql:
+    image: mysql:8.0.22
+    command: --default-authentication-plugin=mysql_native_password --wait_timeout=864000
+    environment:
+      MYSQL_ROOT_PASSWORD: test
+      MYSQL_DATABASE: app
+      MYSQL_USER: app
+      MYSQL_PASSWORD: app
+      MYSQL_ROOT_HOST: '%'
+    networks:
+      - default
