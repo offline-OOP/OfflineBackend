@@ -10,7 +10,7 @@ export class AuthService {
     const user = await this.usersService.findOne(email);
 
     if (user) {
-      const isMatch = await bcrypt.compare(user.password, pass);
+      const isMatch = await bcrypt.compare(pass, user.password);
 
       if (isMatch) return { ...user, password: undefined };
     }
