@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '#Entities/User';
 import { AuthModule } from '#Modules/Auth';
 import { UsersModule } from '#Modules/User';
+import { CommandModule } from 'nestjs-command';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { UsersModule } from '#Modules/User';
     }),
     AuthModule,
     UsersModule,
+    CommandModule,
   ],
 })
 export class Index {}

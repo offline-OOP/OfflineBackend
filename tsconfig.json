@@ -22,7 +22,8 @@
       "#Entities/*": ["src/Entities/*"],
       "#Modules/*": ["src/Modules/*"],
       "#Services/*": ["src/Services/*"],
-      "#Dto/*": ["src/Dto/*"]
+      "#Dto/*": ["src/Dto/*"],
+      "#Commands/*": ["src/Commands/*"]
     }
 
   }

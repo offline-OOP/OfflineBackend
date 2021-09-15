@@ -31,12 +31,14 @@
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
     "mysql2": "^2.3.0",
+    "nestjs-command": "^3.0.2",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
-    "typeorm": "^0.2.37"
+    "typeorm": "^0.2.37",
+    "yargs": "^17.1.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",
@@ -48,6 +50,7 @@
     "@types/node": "^16.0.0",
     "@types/passport-local": "^1.0.34",
     "@types/supertest": "^2.0.11",
+    "@types/yargs": "^17.0.2",
     "@typescript-eslint/eslint-plugin": "^4.28.2",
     "@typescript-eslint/parser": "^4.28.2",
     "eslint": "^7.30.0",
