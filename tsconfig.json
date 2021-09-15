@@ -16,6 +16,14 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "#Controllers/*": ["src/Controllers/*"],
+      "#Entities/*": ["src/Entities/*"],
+      "#Modules/*": ["src/Modules/*"],
+      "#Services/*": ["src/Services/*"],
+      "#Dto/*": ["src/Dto/*"]
+    }
+
   }
 }
