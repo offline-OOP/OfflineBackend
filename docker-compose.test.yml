@@ -10,7 +10,7 @@ services:
       DATABASE_USERNAME: app
       DATABASE_PASSWORD: app
       DATABASE_NAME: app
-    command: sh -c "npm run migration:run && npm run test"
+    command: sh -c "sleep 20 && npm run migration:run && npm run test"
     networks:
       - default
   mysql:
