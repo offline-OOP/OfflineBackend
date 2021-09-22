@@ -23,7 +23,8 @@
       "#Modules/*": ["src/Modules/*"],
       "#Services/*": ["src/Services/*"],
       "#Dto/*": ["src/Dto/*"],
-      "#Commands/*": ["src/Commands/*"]
+      "#Commands/*": ["src/Commands/*"],
+      "#Configs/*": ["src/Configs/*"]
     }
 
   }

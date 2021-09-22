@@ -4,9 +4,10 @@ import { AuthController } from '#Controllers/Auth';
 import { UsersModule } from '#Modules/User';
 import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from '#Services/Auth/local-strategy';
+import { RedisCacheModule } from '#Modules/RedisCache';
 
 @Module({
-  imports: [UsersModule, PassportModule],
+  imports: [UsersModule, PassportModule, RedisCacheModule],
   providers: [AuthService, LocalStrategy],
   controllers: [AuthController],
 })

@@ -31,6 +31,9 @@ export class User {
   @Column()
   password: string;
 
+  @Column({ name: 'email_confirmed', default: false })
+  emailConfirmed: boolean;
+
   @BeforeInsert()
   async hashPassword() {
     const salt = await bcrypt.genSalt();
