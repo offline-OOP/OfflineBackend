@@ -16,12 +16,6 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('api', app, document);
-
-  const config = app.get(ConfigService);
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const port = config.get('PORT', 3000);
-
-  await app.listen(port);
+  await app.listen(3000);
 }
 bootstrap();
