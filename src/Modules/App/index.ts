@@ -1,22 +1,29 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from '#Entities/User';
 import { AuthModule } from '#Modules/Auth';
 import { UsersModule } from '#Modules/User';
 import { CommandModule } from 'nestjs-command';
 import { DbWaitCommand } from '#Commands/WaitDb';
 import { AppController } from '#Controllers/App';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { mysqlConfigFactory } from '#Configs/Mysql';
+import { mailerConfigFactory } from '#Configs/Mailer';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: process.env.DATABASE_HOST || 'localhost',
-      port: +process.env.DATABASE_PORT || 3306,
-      username: process.env.DATABASE_USERNAME || 'app',
-      password: process.env.DATABASE_PASSWORD || 'app',
-      database: process.env.DATABASE_NAME || 'app',
-      entities: [User],
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    TypeOrmModule.forRootAsync({
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      useFactory: mysqlConfigFactory,
+      inject: [ConfigService],
+    }),
+    MailerModule.forRootAsync({
+      useFactory: mailerConfigFactory,
+      inject: [ConfigService],
     }),
     AuthModule,
     UsersModule,

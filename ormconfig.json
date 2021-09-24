@@ -2,9 +2,9 @@
   "type": "mysql",
   "host": "localhost",
   "port": 3306,
-  "username": "test",
-  "password": "test",
-  "database": "test",
+  "username": "app",
+  "password": "app",
+  "database": "app",
   "entities": ["src/Entities/**/*.ts"],
   "migrations": ["migrations/*.ts"],
   "cli": {
