@@ -11,7 +11,7 @@ export class users1632252237294 implements MigrationInterface {
     const user = new User();
     user.firstName = 'admin';
     user.lastName = 'admin';
-    user.email = 'admin@example.com';
+    user.email = 'obackend@bk.ru';
     user.password = 'JKHGY76bhwDW';
     await getRepository(User).save(user);
   }

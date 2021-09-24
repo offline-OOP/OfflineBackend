@@ -1,6 +1,7 @@
-import { Controller, Request, Post, UseGuards, Body } from '@nestjs/common';
+import { Controller, Post, UseGuards, Body } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { SendConfirmationMessageDto } from '#Dto/SendConfirmationMessage';
+import { UserLoginDto } from '#Dto/UserLogin';
 import { ConfirmEmailDto } from '#Dto/ConfirmEmail';
 import { AuthService } from '#Services/Auth';
 
@@ -10,8 +11,8 @@ export class AuthController {
 
   @UseGuards(AuthGuard('local'))
   @Post('login')
-  async login(@Request() req) {
-    return req.user;
+  async login(@Body() userLogin: UserLoginDto) {
+    return userLogin;
   }
 
   @Post('send-confirmation-message')
