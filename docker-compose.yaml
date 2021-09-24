@@ -1,6 +1,11 @@
 version: "3"
 
 services:
+  smtp:
+    image: kbedel/fake-smtp-server
+    ports:
+      - 1080:1080
+      - 1025:1025
   mysql:
     image: mysql:8.0.26
     ports:

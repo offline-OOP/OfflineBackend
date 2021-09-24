@@ -3,14 +3,13 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
 import { join } from 'path';
 
 export async function mailerConfigFactory(config: ConfigService) {
-  return {
+  const params: any = {
     transport: {
-      host: config.get('MAIL_HOST', 'smtp.mail.ru'),
-      port: config.get('MAIL_PORT', 25),
+      host: config.get('MAIL_HOST', 'localhost'),
+      port: config.get('MAIL_PORT', 1025),
       secure: false,
-      auth: {
-        user: config.get('MAIL_USER'),
-        pass: config.get('MAIL_PASSWORD'),
+      tls: {
+        rejectUnauthorized: false,
       },
     },
     defaults: {
@@ -24,4 +23,13 @@ export async function mailerConfigFactory(config: ConfigService) {
       },
     },
   };
+
+  if (config.get('MAIL_USER') && config.get('MAIL_PASSWORD')) {
+    params.auth = {
+      user: config.get('MAIL_USER'),
+      pass: config.get('MAIL_PASSWORD'),
+    };
+  }
+
+  return params;
 }

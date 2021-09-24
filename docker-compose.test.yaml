@@ -1,6 +1,10 @@
 version: '3.8'
 
 services:
+  smtp:
+    image: kbedel/fake-smtp-server
+    networks:
+      - default
   app:
     image: $APP_IMAGE
     environment:
