@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { UsersService } from '#Services/Users';
 import * as bcrypt from 'bcrypt';
+import { User } from '#Entities/User';
 import { HttpException } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
 import { RedisCacheService } from '#Services/RedisCache';
+import { UserRegisterDto } from '#Dto/UserRegister';
 
 @Injectable()
 export class AuthService {
@@ -71,5 +73,21 @@ export class AuthService {
     }
 
     return user;
+  }
+
+  async register(params: UserRegisterDto) {
+    const existingUser = await this.usersService.findOne(params.email);
+
+    if (existingUser) {
+      throw new HttpException('User with such email already exists', 422);
+    }
+
+    const newUser = new User();
+    newUser.email = params.email;
+    newUser.firstName = params.firstName;
+    newUser.lastName = params.lastName;
+    newUser.password = params.password;
+
+    await this.usersService.save(newUser);
   }
 }
