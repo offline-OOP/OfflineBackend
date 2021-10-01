@@ -19,7 +19,7 @@ describe('AuthController (e2e)', () => {
     return request(app.getHttpServer())
       .post('/auth/login')
       .send({
-        email: 'admin@example.com',
+        email: 'obackend@bk.ru',
         password: 'JKHGY76bhwDW',
       })
       .expect(201);

@@ -12,7 +12,7 @@ export class AuthController {
 
   @UseGuards(AuthGuard('local'))
   @Post('login')
-  async login(@Body() userLogin: UserLoginDto) {
+  async login() {
     return;
   }
 
