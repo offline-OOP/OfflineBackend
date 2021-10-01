@@ -9,6 +9,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { mysqlConfigFactory } from '#Configs/Mysql';
 import { mailerConfigFactory } from '#Configs/Mailer';
+import { LoggerModule } from 'nestjs-pino';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { mailerConfigFactory } from '#Configs/Mailer';
     AuthModule,
     UsersModule,
     CommandModule,
+    LoggerModule.forRoot(),
   ],
   providers: [DbWaitCommand],
   controllers: [AppController],
