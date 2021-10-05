@@ -1,10 +1,10 @@
 import { Controller, Post, UseGuards, Body } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { SendConfirmationMessageDto } from '#Dto/SendConfirmationMessage';
-import { UserLoginDto } from '#Dto/UserLogin';
-import { CreateUserDto } from '#Dto/CreateUser';
-import { ConfirmEmailDto } from '#Dto/ConfirmEmail';
-import { AuthService } from '#Services/Auth';
+import { SendConfirmationMessageDto } from './Dto/send-confirmation-message.dto';
+import { UserLoginDto } from './Dto/user-login.dto';
+import { CreateUserDto } from './Dto/create-user.dto';
+import { ConfirmEmailDto } from './Dto/confirm-email.dto';
+import { AuthService } from './auth.service';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Auth')

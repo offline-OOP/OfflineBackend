@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { CommandModule, CommandService } from 'nestjs-command';
-import { Index } from '#Modules/App';
+import { Index } from 'src/App/app.module';
 
 async function bootstrap() {
   const app = await NestFactory.createApplicationContext(Index, {

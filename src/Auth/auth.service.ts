@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { UsersService } from '#Services/Users';
+import { UsersService } from 'src/User/user.sevice';
 import * as bcrypt from 'bcrypt';
 import { HttpException } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
-import { RedisCacheService } from '#Services/RedisCache';
-import { CreateUserDto } from '#Dto/CreateUser';
+import { RedisCacheService } from 'src/RedisCache/redisCache.service';
+import { CreateUserDto } from './Dto/create-user.dto';
 
 @Injectable()
 export class AuthService {
