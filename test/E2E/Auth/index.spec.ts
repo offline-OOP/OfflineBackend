@@ -11,6 +11,7 @@ import Neode from 'neode';
 describe('AuthController (e2e)', () => {
   let app: INestApplication;
   let userService: UsersService;
+  let neode: Neode;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -21,14 +22,16 @@ describe('AuthController (e2e)', () => {
     app = moduleFixture.createNestApplication();
     await app.init();
 
-    const neode = moduleFixture.get<Neode>('Connection');
-    await neode.deleteAll('User');
+    neode = moduleFixture.get<Neode>('Connection');
     userService = moduleFixture.get<UsersService>(UsersService);
+  });
 
-    await userService.save(user);
+  beforeEach(async () => {
+    await neode.deleteAll('User');
   });
 
   it('/auth/login (POST) 201', async () => {
+    await userService.save(user);
     await request(app.getHttpServer())
       .post('/auth/login')
       .send({
@@ -39,6 +42,7 @@ describe('AuthController (e2e)', () => {
   });
 
   it('/auth/login (POST) 401', async () => {
+    await userService.save(user);
     await request(app.getHttpServer())
       .post('/auth/login')
       .send({
@@ -46,5 +50,20 @@ describe('AuthController (e2e)', () => {
         password: '1273',
       })
       .expect(401);
+  });
+
+  it('/auth/register (POST) 200', async () => {
+    await request(app.getHttpServer())
+      .post('/auth/register')
+      .send({
+        email: user.email,
+        password: user.password,
+        name: user.name,
+      })
+      .expect(201);
+
+    const userDb = await userService.findOne(user.email);
+    expect(userDb.name).toEqual(user.name);
+    expect(userDb.email).toEqual(user.email);
   });
 });

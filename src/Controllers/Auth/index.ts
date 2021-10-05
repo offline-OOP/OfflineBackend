@@ -5,7 +5,9 @@ import { UserLoginDto } from '#Dto/UserLogin';
 import { CreateUserDto } from '#Dto/CreateUser';
 import { ConfirmEmailDto } from '#Dto/ConfirmEmail';
 import { AuthService } from '#Services/Auth';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
