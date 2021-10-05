@@ -1,14 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { Global, Module, DynamicModule } from '@nestjs/common';
-import { fromEnv } from 'neode';
-import Neode from 'neode';
-
-export interface IConnection {
-  host: string;
-  username: string;
-  password: string;
-  port: number;
-}
+import * as Neode from 'neode';
+import { neo4jConfigFactory } from '#Configs/Neo4j';
+import { ConfigService } from '@nestjs/config';
 
 interface Schema {
   [label: string]: Neode.SchemaObject;
@@ -17,34 +11,20 @@ interface Schema {
 @Global()
 @Module({})
 export class NeodeModule {
-  static forRoot(connection?: IConnection): DynamicModule {
-    if (!connection) {
-      return {
-        module: NeodeModule,
-        global: true,
-        providers: [
-          {
-            provide: 'Connection',
-            useFactory: async (): Promise<Neode> => {
-              const connect: Neode = await fromEnv();
-              return connect;
-            },
-          },
-        ],
-        exports: ['Connection'],
-      };
-    }
+  static forRoot(): DynamicModule {
     return {
       module: NeodeModule,
       global: true,
       providers: [
         {
           provide: 'Connection',
-          useFactory: async (): Promise<Neode> => {
+          inject: [ConfigService],
+          useFactory: async (config: ConfigService): Promise<Neode> => {
+            const neo4jConfig = await neo4jConfigFactory(config);
             const connect: Neode = await new Neode(
-              `${connection.host}:${connection.port}`,
-              connection.username,
-              connection.password,
+              `bolt://${neo4jConfig.host}:${neo4jConfig.port}`,
+              neo4jConfig.username,
+              neo4jConfig.password,
             );
             return connect;
           },
@@ -53,38 +33,7 @@ export class NeodeModule {
     };
   }
 
-  static forFeature(schema: Schema, connection?: IConnection): DynamicModule {
-    // Check if connection its from env or provided config
-    if (!connection) {
-      return {
-        module: NeodeModule,
-        global: false,
-        providers: [
-          {
-            provide: 'CONFIG',
-            useValue: schema,
-          },
-          {
-            provide: 'Connection',
-            useFactory: async (): Promise<Neode> => {
-              const connect = await fromEnv().with(schema);
-
-              // If schema already installed It handle warn
-              try {
-                await connect.schema.install();
-              } catch (error) {
-                console.log(Object.keys(schema)[0]);
-              } finally {
-                return connect;
-              }
-            },
-            inject: ['CONFIG'],
-          },
-        ],
-        exports: ['Connection'],
-      };
-    }
-    // Create e new connection from URI
+  static forFeature(schema: Schema): DynamicModule {
     return {
       module: NeodeModule,
       global: false,
@@ -95,14 +44,20 @@ export class NeodeModule {
         },
         {
           provide: 'Connection',
-          useFactory: async (): Promise<Neode> => {
-            const connect = await new Neode(
-              `${connection.host}:${connection.port}`,
-              connection.username,
-              connection.password,
-            ).with(schema);
+          useFactory: async (
+            schema: Schema,
+            config: ConfigService,
+          ): Promise<Neode> => {
+            const neo4jConfig = await neo4jConfigFactory(config);
+            const connect: Neode = new Neode(
+              `bolt://${neo4jConfig.host}:${neo4jConfig.port}`,
+              neo4jConfig.username,
+              neo4jConfig.password,
+            );
+
             // If schema already installed It handle warn
             try {
+              await connect.with(schema);
               await connect.schema.install();
             } catch (error) {
               console.log(Object.keys(schema)[0]);
@@ -110,7 +65,7 @@ export class NeodeModule {
               return connect;
             }
           },
-          inject: ['CONFIG'],
+          inject: ['CONFIG', ConfigService],
         },
       ],
       exports: ['Connection'],
