@@ -1,5 +1,4 @@
 import { ConfigService } from '@nestjs/config';
-import { User } from '#Entities/User';
 
 export async function mysqlConfigFactory(config: ConfigService) {
   return {
@@ -9,6 +8,5 @@ export async function mysqlConfigFactory(config: ConfigService) {
     username: config.get('MYSQL_USERNAME', 'app'),
     password: config.get('MYSQL_PASSWORD', 'app'),
     database: config.get('MYSQL_DATABASE', 'app'),
-    entities: [User],
   };
 }

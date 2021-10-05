@@ -6,8 +6,9 @@ import {
   MinLength,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { UserInterface } from '#Interfaces/User';
 
-export class UserRegisterDto {
+export class CreateUserDto implements Partial<UserInterface> {
   @ApiProperty()
   @IsEmail()
   email: string;
@@ -24,10 +25,5 @@ export class UserRegisterDto {
   @MinLength(2)
   @MaxLength(50)
   @ApiProperty()
-  firstName: string;
-
-  @MinLength(2)
-  @MaxLength(50)
-  @ApiProperty()
-  lastName: string;
+  name: string;
 }

@@ -24,7 +24,9 @@
       "#Services/*": ["src/Services/*"],
       "#Dto/*": ["src/Dto/*"],
       "#Commands/*": ["src/Commands/*"],
-      "#Configs/*": ["src/Configs/*"]
+      "#Configs/*": ["src/Configs/*"],
+      "#Schemas/*": ["src/Schemas/*"],
+      "#Interfaces/*": ["src/Interfaces/*"]
     }
 
   }
