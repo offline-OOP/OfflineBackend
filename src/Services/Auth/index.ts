@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { UsersService } from '#Services/Users';
 import * as bcrypt from 'bcrypt';
-import { User } from '#Entities/User';
 import { HttpException } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
 import { RedisCacheService } from '#Services/RedisCache';
-import { UserRegisterDto } from '#Dto/UserRegister';
+import { CreateUserDto } from '#Dto/CreateUser';
 
 @Injectable()
 export class AuthService {
@@ -40,7 +39,7 @@ export class AuthService {
       subject: 'Welcome to Offline App! Confirm your Email',
       template: './confirmation',
       context: {
-        name: user.firstName,
+        name: user.name,
         code,
       },
     });
@@ -75,19 +74,13 @@ export class AuthService {
     return user;
   }
 
-  async register(params: UserRegisterDto) {
+  async register(params: CreateUserDto) {
     const existingUser = await this.usersService.findOne(params.email);
 
     if (existingUser) {
       throw new HttpException('User with such email already exists', 422);
     }
 
-    const newUser = new User();
-    newUser.email = params.email;
-    newUser.firstName = params.firstName;
-    newUser.lastName = params.lastName;
-    newUser.password = params.password;
-
-    await this.usersService.save(newUser);
+    await this.usersService.save(params);
   }
 }

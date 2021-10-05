@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from '#Entities/User';
 import { UsersService } from '#Services/Users';
+import { NeodeModule } from '#Modules/Neo4j';
+import UserSchema from '#Schemas/User';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User])],
+  imports: [NeodeModule.forFeature({ User: UserSchema })],
   providers: [UsersService],
   exports: [UsersService],
 })

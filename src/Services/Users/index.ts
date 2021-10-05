@@ -1,20 +1,29 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { User } from '#Entities/User';
+import { Injectable, Inject } from '@nestjs/common';
+import Neode from 'neode';
+import { UserInterface } from '#Interfaces/User';
+import { CreateUserDto } from '#Dto/CreateUser';
+import { uuid } from 'uuidv4';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
-  constructor(
-    @InjectRepository(User)
-    private usersRepository: Repository<User>,
-  ) {}
+  constructor(@Inject('Connection') private readonly neode: Neode) {}
 
-  async findOne(email: string): Promise<User | undefined> {
-    return this.usersRepository.findOne({ where: { email } });
+  async findOne(email: string): Promise<UserInterface | undefined> {
+    const response = await this.neode.first<UserInterface>(
+      'User',
+      'email',
+      email,
+    );
+
+    return response ? response.toJson() : undefined;
   }
 
-  async save(user: User) {
-    return this.usersRepository.save(user);
+  async save(user: CreateUserDto) {
+    const id: string = uuid();
+    const salt = await bcrypt.genSalt();
+    const password = await bcrypt.hash(user.password, salt);
+
+    await this.neode.create<UserInterface>('User', { ...user, id, password });
   }
 }
