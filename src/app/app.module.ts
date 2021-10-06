@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CommandModule } from 'nestjs-command';
+import { DbWaitCommand } from './waitDB.commands';
 import { AuthModule } from '../auth/auth.module';
 import { UsersModule } from '../user/user.module';
-import { CommandModule } from 'nestjs-command';
-import { DbWaitCommand } from '../commands/WaitDb';
 import { AppController } from './app.controller';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { ConfigModule, ConfigService } from '@nestjs/config';
