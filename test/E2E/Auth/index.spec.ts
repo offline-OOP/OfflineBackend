@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { Index } from 'src/App/app.module';
+import { Index } from '../../../src/App/app.module';
 import { UsersService } from 'src/User/user.sevice';
 import { user } from './__fixtures__/User';
 import { NeodeModule } from 'src/Neo4j/neo4j.module';
