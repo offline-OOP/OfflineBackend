@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { Index } from '../../../src/app.module';
-import { UsersService } from '../../../src/User/user.sevice';
+import { Index } from '../../../src/app/app.module';
+import { UsersService } from '../../../src/user/user.sevice';
 import { user } from './__fixtures__/User';
-import { NeodeModule } from '../../../src/Neo4j/neo4j.module';
-import UserSchema from '../../../src/User/Schemas/user.schema';
+import { NeodeModule } from '../../../src/neo4j/neo4j.module';
+import UserSchema from '../../../src/user/Schemas/user.schema';
 import Neode from 'neode';
 
 describe('AuthController (e2e)', () => {
