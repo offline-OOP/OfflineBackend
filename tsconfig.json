@@ -17,17 +17,17 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
-    "paths": {
-      "#Controllers/*": ["src/Controllers/*"],
-      "#Entities/*": ["src/Entities/*"],
-      "#Modules/*": ["src/Modules/*"],
-      "#Services/*": ["src/Services/*"],
-      "#Dto/*": ["src/Dto/*"],
-      "#Commands/*": ["src/commands/*"],
-      "#Configs/*": ["src/Configs/*"],
-      "#Schemas/*": ["src/Schemas/*"],
-      "#Interfaces/*": ["src/Interfaces/*"]
-    }
+    // "paths": {
+    //   "#Controllers/*": ["src/Controllers/*"],
+    //   "#Entities/*": ["src/Entities/*"],
+    //   "#Modules/*": ["src/Modules/*"],
+    //   "#Services/*": ["src/Services/*"],
+    //   "#Dto/*": ["src/Dto/*"],
+    //   "#Commands/*": ["src/Commands/*"],
+    //   "#Configs/*": ["src/Configs/*"],
+    //   "#Schemas/*": ["src/Schemas/*"],
+    //   "#Interfaces/*": ["src/Interfaces/*"]
+    // }
 
   }
 }
