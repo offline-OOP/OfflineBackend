@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { AuthService } from '../Auth/auth.service';
-import { AuthController } from '../Auth/auth.controller';
-import { UsersModule } from '../User/user.module';
+import { AuthService } from './auth.service';
+import { AuthController } from './auth.controller';
+import { UsersModule } from '../user/user.module';
 import { PassportModule } from '@nestjs/passport';
-import { LocalStrategy } from '../Auth/local-strategy';
-import { RedisCacheModule } from '../RedisCache/redisCache.module';
+import { LocalStrategy } from './local-strategy';
+import { RedisCacheModule } from '../redisCache/redisCache.module';
 
 @Module({
   imports: [UsersModule, PassportModule, RedisCacheModule],

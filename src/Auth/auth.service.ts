@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { UsersService } from 'src/User/user.sevice';
+import { UsersService } from '../user/user.sevice';
 import * as bcrypt from 'bcrypt';
 import { HttpException } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
-import { RedisCacheService } from 'src/RedisCache/redisCache.service';
+import { RedisCacheService } from '../redisCache/redisCache.service';
 import { CreateUserDto } from './Dto/create-user.dto';
 
 @Injectable()
