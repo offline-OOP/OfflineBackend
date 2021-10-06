@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthModule } from 'src/Auth/auth.module';
-import { UsersModule } from 'src/User/user.module';
+import { AuthModule } from './Auth/auth.module';
+import { UsersModule } from './User/user.module';
 import { CommandModule } from 'nestjs-command';
 import { DbWaitCommand } from '#Commands/WaitDb';
-import { AppController } from 'src/App/app.controller';
+import { AppController } from './app.controller';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { mysqlConfigFactory } from './Configs/mysql-config';
-import { mailerConfigFactory } from './Configs/mailer-config';
+import { mysqlConfigFactory } from './mysql-config';
+import { mailerConfigFactory } from './mailer-config';
 import { LoggerModule } from 'nestjs-pino';
 
 @Module({
