@@ -8,8 +8,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { mysqlConfigFactory } from './mysql-config';
 import { mailerConfigFactory } from './mailer-config';
 import { LoggerModule } from 'nestjs-pino';
-import { AuthModule } from 'src/auth/auth.module';
-import { UsersModule } from 'src/user/user.module';
+import { AuthModule } from '../auth/auth.module';
+import { UsersModule } from '../user/user.module';
 
 @Module({
   imports: [
