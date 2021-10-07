@@ -18,16 +18,7 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "#Controllers/*": ["src/Controllers/*"],
-      "#Entities/*": ["src/Entities/*"],
-      "#Modules/*": ["src/Modules/*"],
-      "#Services/*": ["src/Services/*"],
-      "#Dto/*": ["src/Dto/*"],
-      "#Commands/*": ["src/Commands/*"],
-      "#Configs/*": ["src/Configs/*"],
-      "#Schemas/*": ["src/Schemas/*"],
-      "#Interfaces/*": ["src/Interfaces/*"]
+      "@src/*": ["src/*"]
     }
-
   }
 }
