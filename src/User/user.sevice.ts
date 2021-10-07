@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
 import Neode from 'neode';
 import { UserInterface } from './Interfaces/user.interface';
-import { CreateUserDto } from '../auth/Dto/create-user.dto'
+import { CreateUserDto } from '#Auth/Dto/create-user.dto'
 import { uuid } from 'uuidv4';
 import * as bcrypt from 'bcrypt';
 

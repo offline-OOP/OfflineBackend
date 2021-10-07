@@ -17,6 +17,13 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "#App/*": ["src/app/*"],
+      "#Auth/*": ["src/auth/*"],
+      "#Neo4j/*": ["src/neo4j/*"],
+      "#RedisCache/*": ["src/redisCache/*"],
+      "#User/*": ["src/user/*"]
+    }
     // "paths": {
     //   "#Controllers/*": ["src/Controllers/*"],
     //   "#Entities/*": ["src/Entities/*"],
