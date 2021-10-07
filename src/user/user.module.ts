@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { UsersService } from './user.sevice';
-import { NeodeModule } from '#Neo4j/neo4j.module';
-import UserSchema from './Schemas/user.schema';
+import { UsersService } from '@src/user/user.sevice';
+import { NeodeModule } from '@src/neo4j/neo4j.module';
+import UserSchema from './user.schema';
 
 @Module({
   imports: [NeodeModule.forFeature({ User: UserSchema })],

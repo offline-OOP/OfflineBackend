@@ -1,8 +1,7 @@
 import { NestFactory } from '@nestjs/core';
-import { Index } from '#App/app.module';
+import { Index } from '@src/app/app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-//import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(Index);

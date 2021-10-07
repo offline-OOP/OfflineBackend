@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Global, Module, DynamicModule } from '@nestjs/common';
 import * as Neode from 'neode';
-import { neo4jConfigFactory } from './Configs/neo4j.config';
+import { neo4jConfigFactory } from '@src/neo4j/neo4j.config';
 import { ConfigService } from '@nestjs/config';
 
 interface Schema {
