@@ -9,11 +9,11 @@ import { ApiProperty } from '@nestjs/swagger';
 import { UserInterface } from '@src/users/interfaces/users.interface';
 
 export class CreateUserDto implements Partial<UserInterface> {
-  @ApiProperty()
+  @ApiProperty({ example: 'first@mail.ru' })
   @IsEmail()
   email: string;
 
-  @ApiProperty()
+  @ApiProperty({ example: 'F^U3Lk0QU5' })
   @IsString()
   @MinLength(4)
   @MaxLength(20)
@@ -24,6 +24,6 @@ export class CreateUserDto implements Partial<UserInterface> {
 
   @MinLength(2)
   @MaxLength(50)
-  @ApiProperty()
+  @ApiProperty({ example: 'example' })
   name: string;
 }

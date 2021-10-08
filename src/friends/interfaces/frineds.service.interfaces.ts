@@ -17,7 +17,12 @@ export interface AreFriendsInterface {
 
 export interface GetFriendRequestsInterface extends PaginationInterface {
   userId: string;
-  direction: 'in' | 'out';
+  direction: DirectionEnum;
+}
+
+export enum DirectionEnum {
+  in = 'in',
+  out = 'out',
 }
 
 export interface GetFriendsInterface extends PaginationInterface {

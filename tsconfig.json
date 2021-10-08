@@ -19,6 +19,9 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "@src/*": ["src/*"]
-    }
+    },
+    "typeRoots": [
+      "./typings"
+    ]
   }
 }

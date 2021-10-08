@@ -10,6 +10,7 @@ import { mailerConfigFactory } from '@src/mailer/mailer.config';
 import { LoggerModule } from 'nestjs-pino';
 import { AuthModule } from '@src/auth/auth.module';
 import { UsersModule } from '@src/users/users.module';
+import { FriendsModule } from '@src/friends/friends.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { UsersModule } from '@src/users/users.module';
     }),
     AuthModule,
     UsersModule,
+    FriendsModule,
     CommandModule,
     LoggerModule.forRoot(),
   ],
