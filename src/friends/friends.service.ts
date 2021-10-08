@@ -18,7 +18,7 @@ export class FriendsService {
     const friendRequestRelationRes = await query
       .match('initiator', userModel)
       .where('initiator.id', params.initiatorUserId)
-      .relationship('FRIEND_REQUEST', 'out', 'rel', 1)
+      .relationship('FRIEND_REQUEST', 'direction_both', 'rel', 1)
       .to('recipient', userModel)
       .where('recipient.id', params.recipientUserId)
       .return('initiator', 'rel', 'recipient')
