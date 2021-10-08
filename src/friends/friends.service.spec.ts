@@ -6,15 +6,20 @@ import UserSchema from '@src/users/users.schema';
 import Neode from 'neode';
 import { ConfigModule } from '@nestjs/config';
 
-const initiatorUser = {
-  name: 'initiator',
+const firstUser = {
+  name: 'first',
   password: 'F^U3Lk0QU5',
-  email: 'initiator@mail.ru',
+  email: 'first@mail.ru',
 };
-const recipientUserId = {
-  name: 'recipient',
+const secondUser = {
+  name: 'seconds',
   password: 'F^U3Lk0QU5',
-  email: 'recipient@mail.ru',
+  email: 'second@mail.ru',
+};
+const thirdUser = {
+  name: 'third',
+  password: 'F^U3Lk0QU5',
+  email: 'third@mail.ru',
 };
 
 describe('FriendsService', () => {
@@ -39,16 +44,20 @@ describe('FriendsService', () => {
     await neode.deleteAll('User');
   });
 
+  afterAll(async () => {
+    await neode.close();
+  });
+
   it('should be defined', () => {
     expect(friendsService).toBeDefined();
   });
 
   it('validate that friend request created', async () => {
-    const initiatorUserDb = await usersService.save(initiatorUser);
-    const recipientUserDb = await usersService.save(recipientUserId);
+    const firstUserDb = await usersService.save(firstUser);
+    const secondUserDb = await usersService.save(secondUser);
     const params = {
-      initiatorUserId: initiatorUserDb.id,
-      recipientUserId: recipientUserDb.id,
+      initiatorUserId: firstUserDb.id,
+      recipientUserId: secondUserDb.id,
     };
     await friendsService.sendFriendRequest(params);
     const friendRequestSent = await friendsService.friendRequestExists(params);
@@ -56,23 +65,103 @@ describe('FriendsService', () => {
   });
 
   it('accept friend request', async () => {
-    const initiatorUserDb = await usersService.save(initiatorUser);
-    const recipientUserDb = await usersService.save(recipientUserId);
+    const firstUserDb = await usersService.save(firstUser);
+    const secondUserDb = await usersService.save(secondUser);
     const params = {
-      initiatorUserId: initiatorUserDb.id,
-      recipientUserId: recipientUserDb.id,
+      initiatorUserId: firstUserDb.id,
+      recipientUserId: secondUserDb.id,
     };
     await friendsService.sendFriendRequest(params);
     const friendRequestSent = await friendsService.friendRequestExists(params);
     expect(friendRequestSent).toBeTruthy();
     await friendsService.acceptFriendRequest({
-      confirmedUserId: recipientUserDb.id,
-      initiatorUserId: initiatorUserDb.id,
+      confirmedUserId: secondUserDb.id,
+      initiatorUserId: firstUserDb.id,
     });
     const areFriends = await friendsService.areFriends({
       firstUserId: params.initiatorUserId,
       secondUserId: params.recipientUserId,
     });
     expect(areFriends).toBeTruthy();
+  });
+
+  it('Get friend requests', async () => {
+    const firstUserDb = await usersService.save(firstUser);
+    const secondUserDb = await usersService.save(secondUser);
+    const thirdUserDb = await usersService.save(thirdUser);
+    await friendsService.sendFriendRequest({
+      initiatorUserId: firstUserDb.id,
+      recipientUserId: secondUserDb.id,
+    });
+    await friendsService.sendFriendRequest({
+      initiatorUserId: thirdUserDb.id,
+      recipientUserId: secondUserDb.id,
+    });
+
+    const secondUserIncomingFriendRequests =
+      await friendsService.getFriendRequests({
+        page: 1,
+        limit: 100,
+        userId: secondUserDb.id,
+        direction: 'in',
+      });
+    expect(secondUserIncomingFriendRequests.length).toBe(2);
+    const firstUserOutgoingFriendRequests =
+      await friendsService.getFriendRequests({
+        page: 1,
+        limit: 100,
+        userId: firstUserDb.id,
+        direction: 'out',
+      });
+    expect(firstUserOutgoingFriendRequests.length).toBe(1);
+    const thirdUserOutgoingFriendRequests =
+      await friendsService.getFriendRequests({
+        page: 1,
+        limit: 100,
+        userId: firstUserDb.id,
+        direction: 'out',
+      });
+    expect(thirdUserOutgoingFriendRequests.length).toBe(1);
+  });
+
+  it('Get friend of user', async () => {
+    const firstUserDb = await usersService.save(firstUser);
+    const secondUserDb = await usersService.save(secondUser);
+    const thirdUserDb = await usersService.save(thirdUser);
+    await friendsService.sendFriendRequest({
+      initiatorUserId: firstUserDb.id,
+      recipientUserId: secondUserDb.id,
+    });
+    await friendsService.sendFriendRequest({
+      initiatorUserId: thirdUserDb.id,
+      recipientUserId: secondUserDb.id,
+    });
+    await friendsService.acceptFriendRequest({
+      initiatorUserId: firstUserDb.id,
+      confirmedUserId: secondUserDb.id,
+    });
+    await friendsService.acceptFriendRequest({
+      initiatorUserId: thirdUserDb.id,
+      confirmedUserId: secondUserDb.id,
+    });
+
+    const firstUserFriends = await friendsService.getFriends({
+      userId: firstUserDb.id,
+      page: 1,
+      limit: 100,
+    });
+    expect(firstUserFriends.length).toBe(1);
+    const secondUserFriends = await friendsService.getFriends({
+      userId: secondUserDb.id,
+      page: 1,
+      limit: 100,
+    });
+    expect(secondUserFriends.length).toBe(2);
+    const thirdUserFriends = await friendsService.getFriends({
+      userId: thirdUserDb.id,
+      page: 1,
+      limit: 100,
+    });
+    expect(thirdUserFriends.length).toBe(1);
   });
 });

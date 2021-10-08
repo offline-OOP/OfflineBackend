@@ -3,12 +3,48 @@ import {
   SendFriendRequestInterface,
   AcceptFriendRequestInterface,
   AreFriendsInterface,
+  GetFriendRequestsInterface,
+  GetFriendsInterface,
 } from '@src/friends/interfaces/frineds.service.interfaces';
 import Neode from 'neode';
 
 @Injectable()
 export class FriendsService {
   constructor(@Inject('Connection') private readonly neode: Neode) {}
+
+  async getFriends(params: GetFriendsInterface) {
+    const query = this.neode.query();
+    const userModel = this.neode.model('User');
+
+    const userFriendsRes = await query
+      .match('user', userModel)
+      .where('user.id', params.userId)
+      .relationship('FRIENDS', 'direction_both', 'rel', 1)
+      .to('friend', userModel)
+      .return('user', 'rel', 'friend')
+      .skip(params.limit * (params.page - 1))
+      .limit(params.limit + 1)
+      .execute();
+
+    return userFriendsRes.records;
+  }
+
+  async getFriendRequests(params: GetFriendRequestsInterface) {
+    const query = this.neode.query();
+    const userModel = this.neode.model('User');
+
+    const userFriendRequestsRes = await query
+      .match('user', userModel)
+      .where('user.id', params.userId)
+      .relationship('FRIEND_REQUEST', params.direction, 'rel', 1)
+      .to('possibleFriend', userModel)
+      .return('user', 'rel', 'possibleFriend')
+      .skip(params.limit * (params.page - 1))
+      .limit(params.limit + 1)
+      .execute();
+
+    return userFriendRequestsRes.records;
+  }
 
   async friendRequestExists(
     params: SendFriendRequestInterface,

@@ -1,3 +1,5 @@
+import { PaginationInterface } from '@src/generic.interface';
+
 export interface SendFriendRequestInterface {
   initiatorUserId: string; // id of user that sends friend request
   recipientUserId: string; // id of user that receives friend request
@@ -11,4 +13,13 @@ export interface AcceptFriendRequestInterface {
 export interface AreFriendsInterface {
   firstUserId: string;
   secondUserId: string;
+}
+
+export interface GetFriendRequestsInterface extends PaginationInterface {
+  userId: string;
+  direction: 'in' | 'out';
+}
+
+export interface GetFriendsInterface extends PaginationInterface {
+  userId: string;
 }
