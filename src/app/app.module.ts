@@ -9,7 +9,7 @@ import { mysqlConfigFactory } from '@src/mysql/mysql.config';
 import { mailerConfigFactory } from '@src/mailer/mailer.config';
 import { LoggerModule } from 'nestjs-pino';
 import { AuthModule } from '@src/auth/auth.module';
-import { UsersModule } from '@src/user/user.module';
+import { UsersModule } from '@src/users/users.module';
 
 @Module({
   imports: [

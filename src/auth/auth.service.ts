@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { UsersService } from '@src/user/user.sevice';
+import { UsersService } from '@src/users/users.sevice';
 import * as bcrypt from 'bcrypt';
 import { HttpException } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';

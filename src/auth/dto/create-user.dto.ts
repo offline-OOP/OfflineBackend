@@ -6,7 +6,7 @@ import {
   MinLength,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { UserInterface } from '@src/user/interfaces/user.interface';
+import { UserInterface } from '@src/users/interfaces/users.interface';
 
 export class CreateUserDto implements Partial<UserInterface> {
   @ApiProperty()
