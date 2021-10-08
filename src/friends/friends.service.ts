@@ -56,10 +56,18 @@ export class FriendsService {
       throw new HttpException('Friend request already exists', 422);
     }
 
-    const initiatorUser = await this.neode.find('User', params.initiatorUserId);
-    const recipientUser = await this.neode.find('User', params.recipientUserId);
-
-    await initiatorUser.relateTo(recipientUser, 'friendRequests', {});
+    const createFriendRequestQuery = `
+        MATCH
+          (first: User),
+          (second: User)
+        WHERE first.id = $firstId AND second.id = $secondId
+        CREATE (first)-[r:FRIEND_REQUEST]->(second)
+        RETURN type(r)
+    `;
+    await this.neode.cypher(createFriendRequestQuery, {
+      firstId: params.initiatorUserId,
+      secondId: params.recipientUserId,
+    });
   }
 
   async acceptFriendRequest(params: AcceptFriendRequestInterface) {
@@ -79,30 +87,34 @@ export class FriendsService {
       throw new HttpException('Friend request does not exists', 422);
     }
 
-    const userModel = this.neode.model('User');
-    const deleteFriendRelBuilder = this.neode.query();
-    const deleteFriendRequestRel = deleteFriendRelBuilder
-      .match('first', userModel)
-      .where('first.id', params.initiatorUserId)
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      .relationship('FRIEND_REQUEST', 'out', 'rel')
-      .to('second', userModel)
-      .where('second.id', params.confirmedUserId)
-      .delete('rel')
-      .build();
-    // TODO: change to builder
-    const createFriendRel = `
+    const deleteFriendRequestRelQuery = `
+        MATCH
+          (first: User)-[rel:FRIEND_REQUEST]->(second: User)
+        WHERE (first.id = $firstId AND second.id = $secondId) 
+        DELETE rel`;
+    const createFriendRelQuery = `
         MATCH
           (first: User),
           (second: User)
-        WHERE first.id = "${params.initiatorUserId}" AND second.id = "${params.confirmedUserId}"
+        WHERE first.id = $firstId AND second.id = $secondId
         CREATE (first)-[r:FRIENDS]->(second)
         RETURN type(r)`;
 
     await this.neode.batch([
-      deleteFriendRequestRel,
-      { query: createFriendRel },
+      {
+        query: deleteFriendRequestRelQuery,
+        params: {
+          firstId: params.initiatorUserId,
+          secondId: params.confirmedUserId,
+        },
+      },
+      {
+        query: createFriendRelQuery,
+        params: {
+          firstId: params.initiatorUserId,
+          secondId: params.confirmedUserId,
+        },
+      },
     ]);
   }
 }
