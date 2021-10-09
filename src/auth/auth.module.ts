@@ -6,15 +6,19 @@ import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from '@src/auth/strategy/local-strategy';
 import { RedisCacheModule } from '@src/redis-cache/redis-cache.module';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from '@src/auth/constants';
+import { ConfigModule } from '@nestjs/config';
+import { ConfigService } from '@nestjs/config';
 import { JwtStrategy } from '@src/auth/strategy/jwt-strategy';
+import { jwtConfigFactory } from '@src/jwt/jwt.config';
 
 @Module({
   imports: [
     UsersModule,
     PassportModule,
-    JwtModule.register({
-      secret: jwtConstants.secret,
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: jwtConfigFactory,
+      inject: [ConfigService],
     }),
     RedisCacheModule,
   ],
