@@ -5,6 +5,11 @@ export interface SendFriendRequestInterface {
   recipientUserId: string; // id of user that receives friend request
 }
 
+export interface FriendRequestExistsInterface
+  extends SendFriendRequestInterface {
+  direction: DirectionEnum;
+}
+
 export interface AcceptFriendRequestInterface {
   confirmedUserId: string; // id of user that confirmed friend request
   initiatorUserId: string; // id of user that initially sent friend request
@@ -23,6 +28,7 @@ export interface GetFriendRequestsInterface extends PaginationInterface {
 export enum DirectionEnum {
   in = 'in',
   out = 'out',
+  direction_both = 'direction_both',
 }
 
 export interface GetFriendsInterface extends PaginationInterface {

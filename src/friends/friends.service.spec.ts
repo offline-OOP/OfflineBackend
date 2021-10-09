@@ -61,7 +61,10 @@ describe('FriendsService', () => {
       recipientUserId: secondUserDb.id,
     };
     await friendsService.sendFriendRequest(params);
-    const friendRequestSent = await friendsService.friendRequestExists(params);
+    const friendRequestSent = await friendsService.friendRequestExists({
+      ...params,
+      direction: DirectionEnum.out,
+    });
     expect(friendRequestSent).toBeTruthy();
   });
 
@@ -73,7 +76,10 @@ describe('FriendsService', () => {
       recipientUserId: secondUserDb.id,
     };
     await friendsService.sendFriendRequest(params);
-    const friendRequestSent = await friendsService.friendRequestExists(params);
+    const friendRequestSent = await friendsService.friendRequestExists({
+      ...params,
+      direction: DirectionEnum.out,
+    });
     expect(friendRequestSent).toBeTruthy();
     await friendsService.acceptFriendRequest({
       confirmedUserId: secondUserDb.id,

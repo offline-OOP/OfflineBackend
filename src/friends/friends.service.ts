@@ -1,10 +1,12 @@
 import { HttpException, Inject, Injectable } from '@nestjs/common';
 import {
-  SendFriendRequestInterface,
   AcceptFriendRequestInterface,
   AreFriendsInterface,
+  DirectionEnum,
+  FriendRequestExistsInterface,
   GetFriendRequestsInterface,
   GetFriendsInterface,
+  SendFriendRequestInterface,
 } from '@src/friends/interfaces/frineds.service.interfaces';
 import Neode from 'neode';
 
@@ -47,14 +49,14 @@ export class FriendsService {
   }
 
   async friendRequestExists(
-    params: SendFriendRequestInterface,
+    params: FriendRequestExistsInterface,
   ): Promise<boolean> {
     const userModel = this.neode.model('User');
     const query = this.neode.query();
     const friendRequestRelationRes = await query
       .match('initiator', userModel)
       .where('initiator.id', params.initiatorUserId)
-      .relationship('FRIEND_REQUEST', 'direction_both', 'rel', 1)
+      .relationship('FRIEND_REQUEST', params.direction, 'rel', 1)
       .to('recipient', userModel)
       .where('recipient.id', params.recipientUserId)
       .return('initiator', 'rel', 'recipient')
@@ -87,7 +89,10 @@ export class FriendsService {
       throw new HttpException('Already friends', 422);
     }
 
-    const friendRequestExists = await this.friendRequestExists(params);
+    const friendRequestExists = await this.friendRequestExists({
+      ...params,
+      direction: DirectionEnum.direction_both,
+    });
     if (friendRequestExists) {
       throw new HttpException('Friend request already exists', 422);
     }
@@ -118,6 +123,7 @@ export class FriendsService {
     const friendRequestExists = await this.friendRequestExists({
       initiatorUserId: params.initiatorUserId,
       recipientUserId: params.confirmedUserId,
+      direction: DirectionEnum.out,
     });
     if (!friendRequestExists) {
       throw new HttpException('Friend request does not exists', 422);
