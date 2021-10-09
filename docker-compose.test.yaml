@@ -22,7 +22,7 @@ services:
       NEO4J_PORT: 7687
       NEO4J_PROTOCOL: neo4j
       NEO4J_ENCRYPTION: ENCRYPTION_OFF
-    command: sh -c "npx nestjs-command db:wait && npx ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js "migration:run" --config "ormconfigremote.json" && npm run test"
+    command: sh -c "npx nestjs-command db:wait && npm run test"
     networks:
       - default
   redis:
@@ -36,14 +36,3 @@ services:
     environment:
       NEO4J_AUTH: neo4j/test
       NEO4J_dbms_logs_debug_level: DEBUG
-  mysql:
-    image: mysql:8.0.22
-    command: --default-authentication-plugin=mysql_native_password --wait_timeout=864000
-    environment:
-      MYSQL_ROOT_PASSWORD: test
-      MYSQL_DATABASE: app
-      MYSQL_USER: app
-      MYSQL_PASSWORD: app
-      MYSQL_ROOT_HOST: '%'
-    networks:
-      - default
