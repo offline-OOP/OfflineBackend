@@ -59,8 +59,7 @@ export class NeodeModule {
             try {
               await connect.with(schema);
               await connect.schema.install();
-            } catch (error) {
-              console.log(Object.keys(schema)[0]);
+            } catch (_) {
             } finally {
               return connect;
             }

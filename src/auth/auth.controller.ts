@@ -1,4 +1,4 @@
-import { Controller, Post, UseGuards, Body } from '@nestjs/common';
+import { Controller, Post, UseGuards, Body, Req } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { SendConfirmationMessageDto } from '@src/auth/dto/send-confirmation-message.dto';
 import { UserLoginDto } from '@src/auth/dto/user-login.dto';
@@ -6,6 +6,7 @@ import { CreateUserDto } from '@src/auth/dto/create-user.dto';
 import { ConfirmEmailDto } from '@src/auth/dto/confirm-email.dto';
 import { AuthService } from '@src/auth/auth.service';
 import { ApiTags } from '@nestjs/swagger';
+import { AuthenticatedUserRequest } from '@src/generic.interface';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -14,8 +15,11 @@ export class AuthController {
 
   @UseGuards(AuthGuard('local'))
   @Post('login')
-  async login(@Body() userLogin: UserLoginDto) {
-    return { email: userLogin.email };
+  async login(
+    @Body() userLogin: UserLoginDto,
+    @Req() req: AuthenticatedUserRequest,
+  ) {
+    return this.authService.login(req.user);
   }
 
   @Post('register')

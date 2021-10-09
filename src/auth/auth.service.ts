@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { UsersService } from '@src/user/user.sevice';
+import { UsersService } from '@src/users/users.sevice';
 import * as bcrypt from 'bcrypt';
 import { HttpException } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
 import { RedisCacheService } from '@src/redis-cache/redis-cache.service';
 import { CreateUserDto } from '@src/auth/dto/create-user.dto';
+import { UserInterface } from '@src/users/interfaces/users.interface';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
@@ -12,6 +14,7 @@ export class AuthService {
     private usersService: UsersService,
     private readonly redisCacheService: RedisCacheService,
     private readonly mailerService: MailerService,
+    private jwtService: JwtService,
   ) {}
 
   async validateUser(email: string, pass: string): Promise<any> {
@@ -24,6 +27,13 @@ export class AuthService {
     }
 
     return null;
+  }
+
+  async login(user: UserInterface) {
+    const payload = { name: user.name, id: user.id };
+    return {
+      access_token: this.jwtService.sign(payload),
+    };
   }
 
   async sendConfirmationEmail(email: string) {

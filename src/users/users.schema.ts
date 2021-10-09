@@ -24,6 +24,23 @@ const UserSchema: SchemaObject = {
     default: false,
     required: true,
   },
+  friendRequests: {
+    type: 'relationships',
+    target: 'User',
+    relationship: 'FRIEND_REQUEST',
+    direction: 'out',
+    properties: {
+      id: 'string',
+    },
+  },
+  friends: {
+    type: 'relationships',
+    target: 'User',
+    relationship: 'FRIENDS',
+    properties: {
+      id: 'string',
+    },
+  },
 };
 
 export default UserSchema;
