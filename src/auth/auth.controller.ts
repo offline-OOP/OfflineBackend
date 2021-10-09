@@ -7,7 +7,6 @@ import { ConfirmEmailDto } from '@src/auth/dto/confirm-email.dto';
 import { AuthService } from '@src/auth/auth.service';
 import { ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
-import { UserInterface } from '@src/users/interfaces/users.interface';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -17,7 +16,7 @@ export class AuthController {
   @UseGuards(AuthGuard('local'))
   @Post('login')
   async login(@Body() userLogin: UserLoginDto, @Req() req: Request) {
-    return this.authService.login(req.user as UserInterface);
+    return this.authService.login(req.user);
   }
 
   @Post('register')

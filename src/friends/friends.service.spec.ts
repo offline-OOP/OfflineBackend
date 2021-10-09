@@ -5,6 +5,7 @@ import { NeodeModule } from '@src/neo4j/neo4j.module';
 import UserSchema from '@src/users/users.schema';
 import Neode from 'neode';
 import { ConfigModule } from '@nestjs/config';
+import { DirectionEnum } from '@src/friends/interfaces/frineds.service.interfaces';
 
 const firstUser = {
   name: 'first',
@@ -103,7 +104,7 @@ describe('FriendsService', () => {
         page: 1,
         limit: 100,
         userId: secondUserDb.id,
-        direction: 'in',
+        direction: DirectionEnum.in,
       });
     expect(secondUserIncomingFriendRequests.length).toBe(2);
     const firstUserOutgoingFriendRequests =
@@ -111,7 +112,7 @@ describe('FriendsService', () => {
         page: 1,
         limit: 100,
         userId: firstUserDb.id,
-        direction: 'out',
+        direction: DirectionEnum.out,
       });
     expect(firstUserOutgoingFriendRequests.length).toBe(1);
     const thirdUserOutgoingFriendRequests =
@@ -119,7 +120,7 @@ describe('FriendsService', () => {
         page: 1,
         limit: 100,
         userId: firstUserDb.id,
-        direction: 'out',
+        direction: DirectionEnum.out,
       });
     expect(thirdUserOutgoingFriendRequests.length).toBe(1);
   });
