@@ -14,10 +14,10 @@ import { FriendsService } from '@src/friends/friends.service';
 import { SendFriendRequestDto } from '@src/friends/dto/send-friend-request.dto';
 import { AcceptFriendRequestDto } from '@src/friends/dto/accept-friend-request.dto';
 import { GetFriendsDto } from '@src/friends/dto/get-frineds.dto';
-import { Request } from 'express';
 import { PaginationDto } from '@src/generic.dto';
 import { UserEntity } from '@src/users/user.entity';
 import { JwtAuthGuard } from '@src/auth/strategy/jwt-auth-guard';
+import { AuthenticatedUserRequest } from '@src/generic.interface';
 
 @ApiBearerAuth()
 @ApiTags('Friends')
@@ -29,7 +29,7 @@ export class FriendsController {
   @Post('send-friend-request')
   async sendFriendRequest(
     @Body() sendFriendRequest: SendFriendRequestDto,
-    @Req() req: Request,
+    @Req() req: AuthenticatedUserRequest,
   ) {
     await this.friendsService.sendFriendRequest({
       initiatorUserId: req.user.id,
@@ -41,7 +41,7 @@ export class FriendsController {
   @Post('accept-friend-request')
   async acceptFriendRequest(
     @Body() acceptFriendRequest: AcceptFriendRequestDto,
-    @Req() req: Request,
+    @Req() req: AuthenticatedUserRequest,
   ) {
     await this.friendsService.acceptFriendRequest({
       initiatorUserId: req.user.id,
@@ -67,7 +67,7 @@ export class FriendsController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Get()
   async getFriends(
-    @Req() req: Request,
+    @Req() req: AuthenticatedUserRequest,
     @Query() query: PaginationDto,
   ): Promise<UserEntity[]> {
     const friendsDb = await this.friendsService.getFriends({
@@ -106,7 +106,7 @@ export class FriendsController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Get('friend-requests')
   async getFriendRequests(
-    @Req() req: Request,
+    @Req() req: AuthenticatedUserRequest,
     @Query() query: GetFriendsDto,
   ): Promise<UserEntity[]> {
     const friendRequestsDb = await this.friendsService.getFriendRequests({
