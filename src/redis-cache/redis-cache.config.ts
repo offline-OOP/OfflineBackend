@@ -12,7 +12,7 @@ export function cachesConfigFactory(config: ConfigService) {
         ? fs
             .readFileSync('/run/secrets/redis_password')
             .toString()
-            .replace(/\\n/g, '')
+            .replace(/\n/g, '')
         : config.get('REDIS_PASSWORD'),
   };
 }

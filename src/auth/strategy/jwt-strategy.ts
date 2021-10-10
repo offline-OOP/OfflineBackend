@@ -15,7 +15,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
           ? fs
               .readFileSync('/run/secrets/jwt_key')
               .toString()
-              .replace(/\\n/g, '')
+              .replace(/\n/g, '')
           : configService.get('JWT_KEY'),
     });
   }

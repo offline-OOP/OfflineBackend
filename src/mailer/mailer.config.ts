@@ -30,7 +30,7 @@ export async function mailerConfigFactory(config: ConfigService) {
       ? fs
           .readFileSync('/run/secrets/neo4j_password')
           .toString()
-          .replace(/\\n/g, '')
+          .replace(/\n/g, '')
       : config.get('MAIL_PASSWORD');
 
   if (config.get('MAIL_USER') && mailPassword) {

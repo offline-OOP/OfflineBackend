@@ -10,7 +10,7 @@ export async function neo4jConfigFactory(config: ConfigService) {
         ? fs
             .readFileSync('/run/secrets/neo4j_password')
             .toString()
-            .replace(/\\n/g, '')
+            .replace(/\n/g, '')
         : config.get('NEO4J_PASSWORD', 'test'),
     port: config.get('NEO4J_PORT', 7687),
   };
