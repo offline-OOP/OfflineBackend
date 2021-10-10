@@ -7,8 +7,7 @@ export function cachesConfigFactory(config: ConfigService) {
     store: redisStore,
     host: config.get('REDIS_HOST', 'localhost'),
     port: config.get('REDIS_PORT', 6379),
-    username: 'default',
-    password:
+    auth_pass:
       config.get('NODE_ENV') === 'production'
         ? fs
             .readFileSync('/run/secrets/redis_password')
