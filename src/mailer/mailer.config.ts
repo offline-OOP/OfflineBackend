@@ -1,6 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { join } from 'path';
+import fs from 'fs';
 
 export async function mailerConfigFactory(config: ConfigService) {
   const params: any = {
@@ -24,10 +25,18 @@ export async function mailerConfigFactory(config: ConfigService) {
     },
   };
 
-  if (config.get('MAIL_USER') && config.get('MAIL_PASSWORD')) {
+  const mailPassword =
+    config.get('NODE_ENV') === 'production'
+      ? fs
+          .readFileSync('/run/secrets/neo4j_password')
+          .toString()
+          .replace(/\\n/g, '')
+      : config.get('MAIL_PASSWORD');
+
+  if (config.get('MAIL_USER') && mailPassword) {
     params.auth = {
       user: config.get('MAIL_USER'),
-      pass: config.get('MAIL_PASSWORD'),
+      pass: mailPassword,
     };
   }
 
