@@ -1,38 +1,22 @@
-version: '3.8'
+version: "3"
 
 services:
   smtp:
     image: kbedel/fake-smtp-server
-    networks:
-      - default
-  app:
-    image: $APP_IMAGE
-    environment:
-      NODE_ENV: development
-      MYSQL_HOST: mysql
-      MYSQL_PORT: 3306
-      MYSQL_USERNAME: app
-      MYSQL_PASSWORD: app
-      MYSQL_DATABASE: app
-      REDIS_HOST: redis
-      NEO4J_DATABASE: neo4j
-      NEO4J_USERNAME: neo4j
-      NEO4J_PASSWORD: test
-      NEO4J_HOST: neo4j
-      NEO4J_PORT: 7687
-      NEO4J_PROTOCOL: neo4j
-      NEO4J_ENCRYPTION: ENCRYPTION_OFF
-    command: sh -c "npx nestjs-command db:wait && npm run test"
-    networks:
-      - default
-  redis:
-    image: redis:6.0.9-alpine3.12
-    networks:
-      - default
+    ports:
+      - "1080:1080"
+      - "1025:1025"
   neo4j:
     image: neo4j:4.0.3
     hostname: neo4j
     container_name: neo4j
+    ports:
+      - "7474:7474"
+      - "7687:7687"
     environment:
       NEO4J_AUTH: neo4j/test
       NEO4J_dbms_logs_debug_level: DEBUG
+  redis:
+    image: redis:6.0.9-alpine3.12
+    ports:
+      - "6379:6379"
