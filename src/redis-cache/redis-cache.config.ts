@@ -7,6 +7,7 @@ export function cachesConfigFactory(config: ConfigService) {
     store: redisStore,
     host: config.get('REDIS_HOST', 'localhost'),
     port: config.get('REDIS_PORT', 6379),
+    username: 'default',
     password:
       config.get('NODE_ENV') === 'production'
         ? fs
