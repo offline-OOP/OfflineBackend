@@ -1,7 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { join } from 'path';
-import fs from 'fs';
+import * as fs from 'fs';
 
 export async function mailerConfigFactory(config: ConfigService) {
   const params: any = {

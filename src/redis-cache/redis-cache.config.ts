@@ -1,6 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import * as redisStore from 'cache-manager-redis-store';
-import fs from 'fs';
+import * as fs from 'fs';
 
 export function cachesConfigFactory(config: ConfigService) {
   return {

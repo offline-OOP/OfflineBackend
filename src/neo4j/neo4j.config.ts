@@ -1,5 +1,5 @@
 import { ConfigService } from '@nestjs/config';
-import fs from 'fs';
+import * as fs from 'fs';
 
 export async function neo4jConfigFactory(config: ConfigService) {
   return {
