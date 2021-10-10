@@ -44,7 +44,6 @@ jobs:
       - name: Build images and push to docker
         run: bash build.sh
   test:
-    needs: build
     environment: deploy
     env:
       CI_REPOSITORY_NAME: ${{ secrets.CI_REPOSITORY_NAME }}
@@ -64,4 +63,5 @@ jobs:
         run: |
           docker login -u $CI_REPOSITORY_NAME -p $CI_REPOSITORY_PASSWORD
           docker-compose -f docker-compose.test.yaml up -d redis neo4j
-          docker-compose -f docker-compose.test.yaml run app sh -c "npx nestjs-command db:wait && npm run test"
+          npx nestjs-command db:wait
+          npm run test
