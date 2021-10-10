@@ -44,5 +44,5 @@ jobs:
         run: |
           docker login -u $CI_REPOSITORY_NAME -p $CI_REPOSITORY_PASSWORD
           docker-compose -f docker-compose.test.yaml up -d redis neo4j
-          npm run nestjs-command db:wait
+          sleep 10
           npm run test
