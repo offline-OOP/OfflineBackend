@@ -5,8 +5,10 @@ import { UserLoginDto } from '@src/auth/dto/user-login.dto';
 import { CreateUserDto } from '@src/auth/dto/create-user.dto';
 import { ConfirmEmailDto } from '@src/auth/dto/confirm-email.dto';
 import { AuthService } from '@src/auth/auth.service';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { AuthenticatedUserRequest } from '@src/generic.interface';
+import { AccessTokenDto } from '@src/auth/dto/access-token.dto';
+import { CreatedDto } from '@src/generic.dto';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -15,6 +17,10 @@ export class AuthController {
 
   @UseGuards(AuthGuard('local'))
   @Post('login')
+  @ApiCreatedResponse({
+    description: 'Successfully logged in',
+    type: AccessTokenDto,
+  })
   async login(
     @Body() userLogin: UserLoginDto,
     @Req() req: AuthenticatedUserRequest,
@@ -23,8 +29,12 @@ export class AuthController {
   }
 
   @Post('register')
+  @ApiCreatedResponse({
+    description: 'Successfully registered',
+    type: CreatedDto,
+  })
   async register(@Body() createUser: CreateUserDto) {
-    await this.authService.register(createUser);
+    return await this.authService.register(createUser);
   }
 
   @Post('send-confirmation-message')

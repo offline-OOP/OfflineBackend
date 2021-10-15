@@ -9,7 +9,12 @@ import {
   ClassSerializerInterceptor,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiQuery, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+import {
+  ApiQuery,
+  ApiTags,
+  ApiBearerAuth,
+  ApiCreatedResponse,
+} from '@nestjs/swagger';
 import { FriendsService } from '@src/friends/friends.service';
 import { SendFriendRequestDto } from '@src/friends/dto/send-friend-request.dto';
 import { AcceptFriendRequestDto } from '@src/friends/dto/accept-friend-request.dto';
@@ -64,6 +69,10 @@ export class FriendsController {
     example: 100,
     description: 'Number of records to get per page',
   })
+  @ApiCreatedResponse({
+    description: 'Record successfully retrieved',
+    type: [UserEntity],
+  })
   @UseInterceptors(ClassSerializerInterceptor)
   @Get()
   async getFriends(
@@ -102,6 +111,10 @@ export class FriendsController {
     required: true,
     example: 'in',
     description: 'Incoming or outgoing requests',
+  })
+  @ApiCreatedResponse({
+    description: 'Record successfully retrieved',
+    type: [UserEntity],
   })
   @UseInterceptors(ClassSerializerInterceptor)
   @Get('friend-requests')
