@@ -11,6 +11,7 @@ Object {
   "link": "https://localhost",
   "maxPerson": 45,
   "name": "fistEvent",
+  "participants": Array [],
   "price": 100,
   "purchaseLink": "https://localhost",
 }
@@ -27,6 +28,7 @@ Object {
   "link": "https://234",
   "maxPerson": 0,
   "name": "second",
+  "participants": Array [],
   "price": 2,
   "purchaseLink": "https://123",
 }
