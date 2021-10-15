@@ -1,6 +1,6 @@
-import { EventInterface } from '@src/events/interfaces/events.interface';
+import { GenericEventInterface } from '@src/events/interfaces/events.interface';
 
 export interface CreateEventInterface {
-  event: EventInterface;
+  event: GenericEventInterface;
   ownerId: string;
 }

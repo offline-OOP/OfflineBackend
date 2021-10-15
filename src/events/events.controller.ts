@@ -16,8 +16,9 @@ import { CreateEventDto } from '@src/events/dto/create-event.dto';
 import { UpdateEventDto } from '@src/events/dto/update-event.dto';
 import { AuthenticatedUserRequest } from '@src/generic.interface';
 import { EventsService } from '@src/events/events.service';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags, ApiCreatedResponse } from '@nestjs/swagger';
 import { EventEntity } from '@src/events/events.entity';
+import { CreatedDto } from '@src/generic.dto';
 
 @ApiBearerAuth()
 @ApiTags('Events')
@@ -27,6 +28,10 @@ export class EventsController {
 
   @UseGuards(JwtAuthGuard)
   @Post()
+  @ApiCreatedResponse({
+    description: 'Record successfully created',
+    type: CreatedDto,
+  })
   async create(
     @Req() req: AuthenticatedUserRequest,
     @Body() createEventDto: CreateEventDto,
@@ -40,6 +45,10 @@ export class EventsController {
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @Get(':id')
+  @ApiCreatedResponse({
+    description: 'Record successfully retrieved',
+    type: EventEntity,
+  })
   async findOne(@Param('id') id: string): Promise<EventEntity> {
     const eventDb = await this.eventsService.findOne({ eventId: id });
     return new EventEntity({
@@ -52,6 +61,10 @@ export class EventsController {
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @Put(':id')
+  @ApiCreatedResponse({
+    description: 'Record successfully updated',
+    type: EventEntity,
+  })
   async update(
     @Param('id') id: string,
     @Body() updateEventDto: UpdateEventDto,

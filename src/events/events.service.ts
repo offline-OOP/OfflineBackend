@@ -2,7 +2,7 @@ import { HttpException, Inject, Injectable } from '@nestjs/common';
 import { Action } from '@src/generic.interface';
 import { CaslEventsAbilityFactory } from '@src/casl/casl-events-ability.factory';
 import Neode from 'neode';
-import { EventInterface } from '@src/events/interfaces/events.interface';
+import { FullEventInterface } from '@src/events/interfaces/events.interface';
 import { CreateEventInterface } from '@src/events/interfaces/create-event.interface';
 import { UpdateEventInterface } from '@src/events/interfaces/update-event.interface';
 import { RemoveEventInterface } from '@src/events/interfaces/remove-event.interface';
@@ -40,7 +40,10 @@ export class EventsService {
       ownerId,
     );
 
-    const event = await this.neode.merge<EventInterface>('Event', params.event);
+    const event = await this.neode.merge<FullEventInterface>(
+      'Event',
+      params.event,
+    );
 
     return event.toJson();
   }
@@ -65,7 +68,7 @@ export class EventsService {
   }
 
   async findOne(params: FindOneInterface) {
-    const event = await this.neode.first<EventInterface>(
+    const event = await this.neode.first<FullEventInterface>(
       'Event',
       'id',
       params.eventId,
