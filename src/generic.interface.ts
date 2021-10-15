@@ -9,3 +9,11 @@ export interface PaginationInterface {
 export interface AuthenticatedUserRequest extends Request {
   user: UserInterface;
 }
+
+export enum Action {
+  MANAGE = 'MANAGE',
+  CREATE = 'CREATE',
+  READ = 'READ',
+  UPDATE = 'UPDATE',
+  DELETE = 'DELETE',
+}

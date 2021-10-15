@@ -9,6 +9,7 @@ import { LoggerModule } from 'nestjs-pino';
 import { AuthModule } from '@src/auth/auth.module';
 import { UsersModule } from '@src/users/users.module';
 import { FriendsModule } from '@src/friends/friends.module';
+import { EventsModule } from '@src/events/events.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { FriendsModule } from '@src/friends/friends.module';
     AuthModule,
     UsersModule,
     FriendsModule,
+    EventsModule,
     CommandModule,
     LoggerModule.forRoot(),
   ],

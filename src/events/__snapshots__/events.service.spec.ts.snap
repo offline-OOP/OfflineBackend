@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EventsService create event 1`] = `
+Object {
+  "_labels": Array [
+    "Event",
+  ],
+  "age": 18,
+  "category": "OFFLINE_EVENT",
+  "description": "Some event",
+  "link": "https://localhost",
+  "maxPerson": 45,
+  "name": "fistEvent",
+  "price": 100,
+  "purchaseLink": "https://localhost",
+}
+`;
+
+exports[`EventsService update event 1`] = `
+Object {
+  "_labels": Array [
+    "Event",
+  ],
+  "age": 0,
+  "category": "OFFLINE_EVENT",
+  "description": "Second",
+  "link": "https://234",
+  "maxPerson": 0,
+  "name": "second",
+  "price": 2,
+  "purchaseLink": "https://123",
+}
+`;
