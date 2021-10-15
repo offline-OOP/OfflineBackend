@@ -9,7 +9,14 @@ import {
   ClassSerializerInterceptor,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiQuery, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+import {
+  ApiQuery,
+  ApiTags,
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiResponse,
+  ApiOperation,
+} from '@nestjs/swagger';
 import { FriendsService } from '@src/friends/friends.service';
 import { SendFriendRequestDto } from '@src/friends/dto/send-friend-request.dto';
 import { AcceptFriendRequestDto } from '@src/friends/dto/accept-friend-request.dto';
@@ -19,6 +26,14 @@ import { UserEntity } from '@src/users/user.entity';
 import { JwtAuthGuard } from '@src/auth/strategy/jwt-auth-guard';
 import { AuthenticatedUserRequest } from '@src/generic.interface';
 
+@ApiResponse({
+  status: 500,
+  description: 'Internal server error',
+})
+@ApiResponse({
+  status: 400,
+  description: 'Bad request',
+})
 @ApiBearerAuth()
 @ApiTags('Friends')
 @Controller('friends')
@@ -27,6 +42,15 @@ export class FriendsController {
 
   @UseGuards(JwtAuthGuard)
   @Post('send-friend-request')
+  @ApiResponse({
+    status: 201,
+    description: 'Success',
+  })
+  @ApiResponse({
+    status: 422,
+    description: 'Backend error',
+  })
+  @ApiOperation({ summary: 'Send friend request to another user' })
   async sendFriendRequest(
     @Body() sendFriendRequest: SendFriendRequestDto,
     @Req() req: AuthenticatedUserRequest,
@@ -39,6 +63,11 @@ export class FriendsController {
 
   @UseGuards(JwtAuthGuard)
   @Post('accept-friend-request')
+  @ApiResponse({
+    status: 422,
+    description: 'Backend error',
+  })
+  @ApiOperation({ summary: 'Accept friend request from another user' })
   async acceptFriendRequest(
     @Body() acceptFriendRequest: AcceptFriendRequestDto,
     @Req() req: AuthenticatedUserRequest,
@@ -64,7 +93,12 @@ export class FriendsController {
     example: 100,
     description: 'Number of records to get per page',
   })
+  @ApiCreatedResponse({
+    description: 'Record successfully retrieved',
+    type: [UserEntity],
+  })
   @UseInterceptors(ClassSerializerInterceptor)
+  @ApiOperation({ summary: 'Get list of users friends' })
   @Get()
   async getFriends(
     @Req() req: AuthenticatedUserRequest,
@@ -103,8 +137,13 @@ export class FriendsController {
     example: 'in',
     description: 'Incoming or outgoing requests',
   })
+  @ApiCreatedResponse({
+    description: 'Record successfully retrieved',
+    type: [UserEntity],
+  })
   @UseInterceptors(ClassSerializerInterceptor)
   @Get('friend-requests')
+  @ApiOperation({ summary: 'Get users friend requests' })
   async getFriendRequests(
     @Req() req: AuthenticatedUserRequest,
     @Query() query: GetFriendsDto,

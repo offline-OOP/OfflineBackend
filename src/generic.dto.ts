@@ -1,5 +1,6 @@
 import { Min, Max, IsNumber } from 'class-validator';
 import { Type } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class PaginationDto {
   @IsNumber()
@@ -11,4 +12,9 @@ export class PaginationDto {
   @Max(10000)
   @Type(() => Number)
   limit: number;
+}
+
+export class CreatedDto {
+  @ApiProperty({ example: '3f428a5a-3a9b-41eb-aa21-87bce6408b98' })
+  id: string;
 }
