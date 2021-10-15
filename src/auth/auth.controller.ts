@@ -5,11 +5,24 @@ import { UserLoginDto } from '@src/auth/dto/user-login.dto';
 import { CreateUserDto } from '@src/auth/dto/create-user.dto';
 import { ConfirmEmailDto } from '@src/auth/dto/confirm-email.dto';
 import { AuthService } from '@src/auth/auth.service';
-import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiResponse,
+  ApiTags,
+  ApiOperation,
+} from '@nestjs/swagger';
 import { AuthenticatedUserRequest } from '@src/generic.interface';
 import { AccessTokenDto } from '@src/auth/dto/access-token.dto';
 import { CreatedDto } from '@src/generic.dto';
 
+@ApiResponse({
+  status: 500,
+  description: 'Internal server error',
+})
+@ApiResponse({
+  status: 400,
+  description: 'Bad request',
+})
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
@@ -21,6 +34,7 @@ export class AuthController {
     description: 'Successfully logged in',
     type: AccessTokenDto,
   })
+  @ApiOperation({ summary: 'Login to the system' })
   async login(
     @Body() userLogin: UserLoginDto,
     @Req() req: AuthenticatedUserRequest,
@@ -33,11 +47,21 @@ export class AuthController {
     description: 'Successfully registered',
     type: CreatedDto,
   })
+  @ApiResponse({
+    status: 422,
+    description: 'Backend error',
+  })
+  @ApiOperation({ summary: 'Register user' })
   async register(@Body() createUser: CreateUserDto) {
     return await this.authService.register(createUser);
   }
 
   @Post('send-confirmation-message')
+  @ApiResponse({
+    status: 201,
+    description: 'Success',
+  })
+  @ApiOperation({ summary: 'Send confirmation message to email' })
   async sendConfirmationMessage(
     @Body() sendConfirmationMessageDto: SendConfirmationMessageDto,
   ) {
@@ -47,6 +71,15 @@ export class AuthController {
   }
 
   @Post('confirm-email')
+  @ApiResponse({
+    status: 422,
+    description: 'Backend error',
+  })
+  @ApiResponse({
+    status: 201,
+    description: 'Success',
+  })
+  @ApiOperation({ summary: 'Confirm email' })
   async confirmEmail(@Body() confirmEmailDto: ConfirmEmailDto) {
     await this.authService.confirmEmail(
       confirmEmailDto.email,
