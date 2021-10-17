@@ -2,12 +2,12 @@ import { HttpException, Inject, Injectable } from '@nestjs/common';
 import {
   AcceptFriendRequestInterface,
   AreFriendsInterface,
-  DirectionEnum,
   FriendRequestExistsInterface,
   GetFriendRequestsInterface,
   GetFriendsInterface,
   SendFriendRequestInterface,
 } from '@src/friends/interfaces/frineds.service.interfaces';
+import { DirectionEnum } from '@src/generic.interface';
 import Neode from 'neode';
 
 @Injectable()
