@@ -5,7 +5,7 @@ import { NeodeModule } from '@src/neo4j/neo4j.module';
 import UserSchema from '@src/users/users.schema';
 import Neode from 'neode';
 import { ConfigModule } from '@nestjs/config';
-import { DirectionEnum } from '@src/friends/interfaces/frineds.service.interfaces';
+import { DirectionEnum } from '@src/generic.interface';
 
 const firstUser = {
   name: 'first',
