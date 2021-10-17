@@ -2,7 +2,7 @@ import { Controller, Post, UseGuards, Body, Req } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { SendConfirmationMessageDto } from '@src/auth/dto/send-confirmation-message.dto';
 import { UserLoginDto } from '@src/auth/dto/user-login.dto';
-import { CreateUserDto } from '@src/auth/dto/create-user.dto';
+import { CreateUserDto } from '@src/users/dto/create-user.dto';
 import { ConfirmEmailDto } from '@src/auth/dto/confirm-email.dto';
 import { AuthService } from '@src/auth/auth.service';
 import {

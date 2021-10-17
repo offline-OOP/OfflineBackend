@@ -4,7 +4,7 @@ import * as bcrypt from 'bcrypt';
 import { HttpException } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
 import { RedisCacheService } from '@src/redis-cache/redis-cache.service';
-import { CreateUserDto } from '@src/auth/dto/create-user.dto';
+import { CreateUserDto } from '@src/users/dto/create-user.dto';
 import { UserInterface } from '@src/users/interfaces/users.interface';
 import { JwtService } from '@nestjs/jwt';
 

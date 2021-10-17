@@ -6,22 +6,11 @@ import UserSchema from '@src/users/users.schema';
 import Neode from 'neode';
 import { ConfigModule } from '@nestjs/config';
 import { DirectionEnum } from '@src/generic.interface';
-
-const firstUser = {
-  name: 'first',
-  password: 'F^U3Lk0QU5',
-  email: 'first@mail.ru',
-};
-const secondUser = {
-  name: 'seconds',
-  password: 'F^U3Lk0QU5',
-  email: 'second@mail.ru',
-};
-const thirdUser = {
-  name: 'third',
-  password: 'F^U3Lk0QU5',
-  email: 'third@mail.ru',
-};
+import {
+  firstUser,
+  secondUser,
+  thirdUser,
+} from '@src/friends/__fixtures__/users';
 
 describe('FriendsService', () => {
   let friendsService: FriendsService;

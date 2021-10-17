@@ -5,43 +5,13 @@ import { NeodeModule } from '@src/neo4j/neo4j.module';
 import UserSchema from '@src/users/users.schema';
 import { UsersService } from '@src/users/users.sevice';
 import Neode from 'neode';
-import { CategoriesEnum } from '@src/events/interfaces/categories.interface';
 import { CaslModule } from '@src/casl/casl.module';
 import EventsSchema from '@src/events/events.schema';
 import { omit } from 'lodash';
 import { HttpException } from '@nestjs/common';
 import { Action } from '@src/generic.interface';
-
-const firstUser = {
-  name: 'first',
-  password: 'F^U3Lk0QU5',
-  email: 'first@mail.ru',
-};
-const secondUser = {
-  name: 'seconds',
-  password: 'F^U3Lk0QU5',
-  email: 'second@mail.ru',
-};
-const firstEvent = {
-  name: 'fistEvent',
-  category: CategoriesEnum.OFFLINE_EVENT,
-  price: 100,
-  purchaseLink: 'https://localhost',
-  description: 'Some event',
-  link: 'https://localhost',
-  age: 18,
-  maxPerson: 45,
-};
-const secondEvent = {
-  name: 'second',
-  category: CategoriesEnum.OFFLINE_EVENT,
-  price: 2,
-  purchaseLink: 'https://123',
-  description: 'Second',
-  link: 'https://234',
-  age: 0,
-  maxPerson: 0,
-};
+import { firstEvent, secondEvent } from '@src/events/__fixtures__/events';
+import { firstUser, secondUser } from '@src/events/__fixtures__/users';
 
 describe('EventsService', () => {
   let eventsService: EventsService;
