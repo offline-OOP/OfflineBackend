@@ -3,10 +3,12 @@ import { Action } from '@src/generic.interface';
 import { CaslEventsAbilityFactory } from '@src/casl/casl-events-ability.factory';
 import Neode from 'neode';
 import { FullEventInterface } from '@src/events/interfaces/events.interface';
-import { CreateEventInterface } from '@src/events/interfaces/create-event.interface';
-import { UpdateEventInterface } from '@src/events/interfaces/update-event.interface';
-import { RemoveEventInterface } from '@src/events/interfaces/remove-event.interface';
-import { FindOneInterface } from '@src/events/interfaces/find-one.interface';
+import {
+  CreateEventInterface,
+  UpdateEventInterface,
+  RemoveEventInterface,
+  FindOneInterface,
+} from '@src/events/interfaces/events.service.interfaces';
 import { uuid } from 'uuidv4';
 
 @Injectable()

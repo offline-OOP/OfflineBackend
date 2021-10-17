@@ -1,4 +1,4 @@
-import { PaginationInterface } from '@src/generic.interface';
+import { DirectionEnum, PaginationInterface } from '@src/generic.interface';
 
 export interface SendFriendRequestInterface {
   initiatorUserId: string; // id of user that sends friend request
@@ -23,12 +23,6 @@ export interface AreFriendsInterface {
 export interface GetFriendRequestsInterface extends PaginationInterface {
   userId: string;
   direction: DirectionEnum;
-}
-
-export enum DirectionEnum {
-  in = 'in',
-  out = 'out',
-  direction_both = 'direction_both',
 }
 
 export interface GetFriendsInterface extends PaginationInterface {

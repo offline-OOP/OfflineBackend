@@ -17,3 +17,9 @@ export enum Action {
   UPDATE = 'UPDATE',
   DELETE = 'DELETE',
 }
+
+export enum DirectionEnum {
+  in = 'in',
+  out = 'out',
+  direction_both = 'direction_both',
+}
