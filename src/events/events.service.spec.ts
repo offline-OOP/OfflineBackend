@@ -67,24 +67,6 @@ describe('EventsService', () => {
     expect(omit(eventDb, ['id', '_id', 'owner'])).toMatchSnapshot();
   });
 
-  test('update event of another user', async () => {
-    const firstUserDb = await usersService.save(firstUser);
-    const secondUserDb = await usersService.save(secondUser);
-
-    const { id } = await eventsService.create({
-      event: firstEvent,
-      ownerId: firstUserDb.id,
-    });
-
-    await expect(
-      eventsService.update({
-        eventId: id,
-        event: secondEvent,
-        user: secondUserDb,
-      }),
-    ).rejects.toThrow(new HttpException(`Can not ${Action.UPDATE} event`, 403));
-  });
-
   it('delete event', async () => {
     const firstUserDb = await usersService.save(firstUser);
 
@@ -97,22 +79,5 @@ describe('EventsService', () => {
     await expect(eventsService.findOne({ eventId: id })).rejects.toThrow(
       new HttpException('Event not found', 404),
     );
-  });
-
-  test('delete event of another user', async () => {
-    const firstUserDb = await usersService.save(firstUser);
-    const secondUserDb = await usersService.save(secondUser);
-
-    const { id } = await eventsService.create({
-      event: firstEvent,
-      ownerId: firstUserDb.id,
-    });
-
-    await expect(
-      eventsService.remove({
-        eventId: id,
-        user: secondUserDb,
-      }),
-    ).rejects.toThrow(new HttpException(`Can not ${Action.DELETE} event`, 403));
   });
 });

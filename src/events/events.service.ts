@@ -1,6 +1,4 @@
 import { HttpException, Inject, Injectable } from '@nestjs/common';
-import { Action } from '@src/generic.interface';
-import { CaslEventsAbilityFactory } from '@src/casl/casl-events-ability.factory';
 import Neode from 'neode';
 import { FullEventInterface } from '@src/events/interfaces/events.interface';
 import {
@@ -13,10 +11,7 @@ import { uuid } from 'uuidv4';
 
 @Injectable()
 export class EventsService {
-  constructor(
-    @Inject('Connection') private readonly neode: Neode,
-    private caslEventsAbilityFactory: CaslEventsAbilityFactory,
-  ) {}
+  constructor(@Inject('Connection') private readonly neode: Neode) {}
 
   async create(params: CreateEventInterface) {
     const id: string = uuid();
@@ -34,14 +29,6 @@ export class EventsService {
   }
 
   async update(params: UpdateEventInterface) {
-    const ownerId = await this.getOwnerId(params.eventId);
-
-    await this.caslEventsAbilityFactory.hasAbility(
-      params.user,
-      Action.UPDATE,
-      ownerId,
-    );
-
     const event = await this.neode.merge<FullEventInterface>(
       'Event',
       params.event,
@@ -51,14 +38,6 @@ export class EventsService {
   }
 
   async remove(params: RemoveEventInterface) {
-    const ownerId = await this.getOwnerId(params.eventId);
-
-    await this.caslEventsAbilityFactory.hasAbility(
-      params.user,
-      Action.DELETE,
-      ownerId,
-    );
-
     const query = this.neode.query();
     const eventModel = this.neode.model('Event');
 
@@ -81,25 +60,5 @@ export class EventsService {
     }
 
     return event.toJson();
-  }
-
-  private async getOwnerId(eventId: string) {
-    const query = this.neode.query();
-    const eventModel = this.neode.model('Event');
-    const userModel = this.neode.model('User');
-
-    const res = await query
-      .match('event', eventModel)
-      .where('event.id', eventId)
-      .relationship('OWNER', 'in', 'rel', 1)
-      .to('owner', userModel)
-      .return('owner')
-      .execute();
-
-    if (res.records.length) {
-      return res.records[0].get('owner').properties.id;
-    }
-
-    return undefined;
   }
 }
