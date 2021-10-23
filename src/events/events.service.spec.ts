@@ -9,9 +9,8 @@ import { CaslModule } from '@src/casl/casl.module';
 import EventsSchema from '@src/events/events.schema';
 import { omit } from 'lodash';
 import { HttpException } from '@nestjs/common';
-import { Action } from '@src/generic.interface';
 import { firstEvent, secondEvent } from '@src/events/__fixtures__/events';
-import { firstUser, secondUser } from '@src/events/__fixtures__/users';
+import { firstUser } from '@src/events/__fixtures__/users';
 
 describe('EventsService', () => {
   let eventsService: EventsService;

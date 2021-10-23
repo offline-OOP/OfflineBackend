@@ -14,3 +14,7 @@ export class Entity {
     Object.assign(this, attrs);
   }
 }
+
+export class Event extends Entity {
+  ownerId: string;
+}

@@ -8,7 +8,7 @@ import {
 import { Action } from '@src/generic.interface';
 import { UserInterface } from '@src/users/interfaces/users.interface';
 import { Injectable } from '@nestjs/common';
-import { Entity } from '@src/casl/interfaces/policy-handler.interface';
+import { Entity, Event } from '@src/casl/interfaces/policy-handler.interface';
 
 type Subjects = InferSubjects<typeof Entity> | 'all';
 
@@ -21,8 +21,8 @@ export class CaslAbilityFactory {
       Ability as AbilityClass<AppAbility>,
     );
 
-    can(Action.UPDATE, Entity, { ownerId: user.id });
-    can(Action.DELETE, Entity, { ownerId: user.id });
+    can(Action.UPDATE, Event, { ownerId: user.id });
+    can(Action.DELETE, Event, { ownerId: user.id });
 
     return build({
       detectSubjectType: (item) =>

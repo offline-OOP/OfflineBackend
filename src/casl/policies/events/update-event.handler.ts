@@ -1,7 +1,7 @@
 import { AppAbility } from '@src/casl/casl-ability.factory';
 import { Action, RequestData } from '@src/generic.interface';
 import {
-  Entity,
+  Event,
   PolicyHandler,
 } from '@src/casl/interfaces/policy-handler.interface';
 
@@ -14,7 +14,7 @@ export class UpdateEventHandler implements PolicyHandler {
   handle(ability: AppAbility): boolean {
     if (!this.data.event) return false;
 
-    const ev = new Entity({ ownerId: this.data.event.owner.id });
+    const ev = new Event({ ownerId: this.data.event.owner.id });
     return ability.can(Action.UPDATE, ev);
   }
 }
