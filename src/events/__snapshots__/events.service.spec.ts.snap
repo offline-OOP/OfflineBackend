@@ -1,5 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`EventsService Update single event field 1`] = `
+Object {
+  "_labels": Array [
+    "Event",
+  ],
+  "age": 18,
+  "category": "OFFLINE_EVENT",
+  "description": "Some event",
+  "link": "https://localhost",
+  "maxPerson": 45,
+  "name": "Changed name",
+  "participants": Array [],
+  "price": 0,
+  "purchaseLink": "https://localhost",
+}
+`;
+
 exports[`EventsService create event 1`] = `
 Object {
   "_labels": Array [

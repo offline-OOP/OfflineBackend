@@ -29,8 +29,9 @@ export class EventsService {
   }
 
   async update(params: UpdateEventInterface) {
-    const event = await this.neode.merge<FullEventInterface>(
+    const event = await this.neode.mergeOn<FullEventInterface>(
       'Event',
+      { id: params.eventId },
       params.event,
     );
 

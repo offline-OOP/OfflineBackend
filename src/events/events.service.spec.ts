@@ -66,6 +66,22 @@ describe('EventsService', () => {
     expect(omit(eventDb, ['id', '_id', 'owner'])).toMatchSnapshot();
   });
 
+  it('Update single event field', async () => {
+    const firstUserDb = await usersService.save(firstUser);
+
+    const { id } = await eventsService.create({
+      event: firstEvent,
+      ownerId: firstUserDb.id,
+    });
+
+    const eventDb = await eventsService.update({
+      eventId: id,
+      event: { name: 'Changed name' },
+      user: firstUserDb,
+    });
+    expect(omit(eventDb, ['id', '_id', 'owner'])).toMatchSnapshot();
+  });
+
   it('delete event', async () => {
     const firstUserDb = await usersService.save(firstUser);
 
