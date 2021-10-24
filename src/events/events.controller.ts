@@ -6,7 +6,6 @@ import {
   Delete,
   Body,
   Param,
-  UseGuards,
   Req,
   UseInterceptors,
   ClassSerializerInterceptor,
@@ -25,6 +24,10 @@ import {
 } from '@nestjs/swagger';
 import { EventEntity } from '@src/events/events.entity';
 import { CreatedDto } from '@src/generic.dto';
+import { Acl } from '@src/casl/decorators/acl.decorator';
+import { UpdateEventHandler } from '@src/casl/policies/events/update-event.handler';
+import { CheckPolicies } from '@src/casl/decorators/check-policies.decorator';
+import { RemoveEventHandler } from '@src/casl/policies/events/remove-event.handler';
 
 @ApiResponse({
   status: 500,
@@ -33,10 +36,10 @@ import { CreatedDto } from '@src/generic.dto';
 @ApiBearerAuth()
 @ApiTags('Events')
 @Controller('events')
+@Acl(JwtAuthGuard)
 export class EventsController {
   constructor(private eventsService: EventsService) {}
 
-  @UseGuards(JwtAuthGuard)
   @Post()
   @ApiCreatedResponse({
     description: 'Record successfully created',
@@ -53,7 +56,6 @@ export class EventsController {
     });
   }
 
-  @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @Get(':id')
   @ApiCreatedResponse({
@@ -74,7 +76,6 @@ export class EventsController {
     });
   }
 
-  @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @Put(':id')
   @ApiCreatedResponse({
@@ -86,6 +87,7 @@ export class EventsController {
     description: 'Forbidden',
   })
   @ApiOperation({ summary: 'Update event by id' })
+  @CheckPolicies(UpdateEventHandler)
   async update(
     @Param('id') id: string,
     @Body() updateEventDto: UpdateEventDto,
@@ -104,7 +106,6 @@ export class EventsController {
     });
   }
 
-  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   @ApiResponse({
     status: 403,
@@ -114,6 +115,7 @@ export class EventsController {
     status: 200,
     description: 'Success',
   })
+  @CheckPolicies(RemoveEventHandler)
   @ApiOperation({ summary: 'Remove event by id' })
   async remove(@Param('id') id: string, @Req() req: AuthenticatedUserRequest) {
     await this.eventsService.remove({ eventId: id, user: req.user });
