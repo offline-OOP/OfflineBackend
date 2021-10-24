@@ -1,6 +1,11 @@
 import { SchemaObject } from 'neode';
 
 const LineupsSchema: SchemaObject = {
+  id: {
+    type: 'uuid',
+    primary: true,
+    required: true,
+  },
   datetime: {
     type: 'datetime',
     required: true,

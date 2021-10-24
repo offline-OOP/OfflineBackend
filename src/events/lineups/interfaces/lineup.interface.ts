@@ -9,5 +9,6 @@ export interface GenericLineupInterface {
 }
 
 export interface FullLineupInterface extends GenericLineupInterface {
+  id: string;
   participants: UserInterface[];
 }

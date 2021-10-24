@@ -6,6 +6,8 @@ import {
   Param,
   Put,
   Delete,
+  UseInterceptors,
+  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -22,6 +24,10 @@ import { UpdateLineupDto } from '@src/events/lineups/dto/update-lineup.dto';
 import { LineupsService } from '@src/events/lineups/lineups.service';
 import { LineupsEntity } from '@src/events/lineups/lineups.entity';
 import { Acl } from '@src/casl/decorators/acl.decorator';
+import { CheckPolicies } from '@src/casl/decorators/check-policies.decorator';
+import { RemoveLineupHandler } from '@src/casl/policies/lineups/remove-lineup.handler';
+import { UpdateLineupHandler } from '@src/casl/policies/lineups/update-lineup.handler';
+import { CreateLineupHandler } from '@src/casl/policies/lineups/craete-lineup.handler';
 
 @ApiBearerAuth()
 @ApiResponse({
@@ -44,6 +50,7 @@ export class LineupsController {
     type: CreatedDto,
   })
   @ApiOperation({ summary: 'Create lineup' })
+  @CheckPolicies(CreateLineupHandler)
   async create(
     @Req() req: AuthenticatedUserRequest,
     @Body() createLineupDto: CreateLineupDto,
@@ -62,18 +69,22 @@ export class LineupsController {
     description: 'Record successfully updated',
     type: LineupsEntity,
   })
+  @CheckPolicies(UpdateLineupHandler)
+  @UseInterceptors(ClassSerializerInterceptor)
   async update(
     @Req() req: AuthenticatedUserRequest,
     @Body() updateLineupDto: UpdateLineupDto,
     @Param('eventId') eventId: string,
     @Param('id') id: string,
   ) {
-    return this.lineupsService.update({
+    const updatedLineup = await this.lineupsService.update({
       user: req.user,
       lineup: updateLineupDto,
       lineupId: id,
       eventId,
     });
+
+    return new LineupsEntity(updatedLineup);
   }
 
   @Delete(':id')
@@ -82,6 +93,7 @@ export class LineupsController {
     description: 'Success',
   })
   @ApiOperation({ summary: 'Remove lineup by id' })
+  @CheckPolicies(RemoveLineupHandler)
   async remove(
     @Param('eventId') eventId: string,
     @Param('id') id: string,

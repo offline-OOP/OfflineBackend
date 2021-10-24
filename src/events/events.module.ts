@@ -7,26 +7,30 @@ import EventsSchema from '@src/events/events.schema';
 import UserSchema from '@src/users/users.schema';
 import { GetEventMiddleware } from '@src/events/middleware/events.middleware';
 import { LineupsModule } from '@src/events/lineups/lineups.module';
+import LineupsSchema from '@src/events/lineups/lineups.schema';
 
 @Module({
   imports: [
     CaslModule,
     LineupsModule,
-    NeodeModule.forFeature({ Event: EventsSchema, User: UserSchema }),
+    NeodeModule.forFeature({
+      Event: EventsSchema,
+      User: UserSchema,
+      Lineup: LineupsSchema,
+    }),
   ],
   controllers: [EventsController],
   providers: [EventsService],
 })
 export class EventsModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(GetEventMiddleware)
-      .forRoutes(
-        { path: 'events/:id', method: RequestMethod.PUT },
-        { path: 'events/:id', method: RequestMethod.DELETE },
-        { path: 'events/:eventId/lineups/:id', method: RequestMethod.POST },
-        { path: 'events/:eventId/lineups/:id', method: RequestMethod.PUT },
-        { path: 'events/:eventId/lineups/:id', method: RequestMethod.DELETE },
-      );
+    consumer.apply(GetEventMiddleware).forRoutes(
+      { path: 'events/:id', method: RequestMethod.PUT },
+      { path: 'events/:id', method: RequestMethod.DELETE },
+      {
+        path: 'events/:eventId/lineups',
+        method: RequestMethod.POST,
+      },
+    );
   }
 }
