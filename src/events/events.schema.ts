@@ -49,8 +49,8 @@ const EventsSchema: SchemaObject = {
   },
   lineups: {
     type: 'relationships',
-    target: 'Event',
-    relationship: 'LINEUPS',
+    target: 'Lineup',
+    relationship: 'LINEUP',
     direction: 'out',
     properties: {
       id: 'string',

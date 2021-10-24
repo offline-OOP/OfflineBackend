@@ -1,5 +1,6 @@
 import { CategoriesEnum } from '@src/events/interfaces/categories.interface';
 import { UserInterface } from '@src/users/interfaces/users.interface';
+import { FullLineupInterface } from '@src/events/lineups/interfaces/lineup.interface';
 
 export interface GenericEventInterface {
   name: string;
@@ -13,5 +14,7 @@ export interface GenericEventInterface {
 }
 
 export interface FullEventInterface extends GenericEventInterface {
+  id: string;
   owner: UserInterface;
+  lineups: FullLineupInterface[];
 }

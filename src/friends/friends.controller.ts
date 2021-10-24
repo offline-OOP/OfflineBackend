@@ -34,13 +34,13 @@ import { AuthenticatedUserRequest } from '@src/generic.interface';
   status: 400,
   description: 'Bad request',
 })
+@UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
 @ApiTags('Friends')
 @Controller('friends')
 export class FriendsController {
   constructor(private friendsService: FriendsService) {}
 
-  @UseGuards(JwtAuthGuard)
   @Post('send-friend-request')
   @ApiResponse({
     status: 201,
@@ -61,7 +61,6 @@ export class FriendsController {
     });
   }
 
-  @UseGuards(JwtAuthGuard)
   @Post('accept-friend-request')
   @ApiResponse({
     status: 422,
@@ -78,7 +77,6 @@ export class FriendsController {
     });
   }
 
-  @UseGuards(JwtAuthGuard)
   @ApiQuery({
     name: 'page',
     type: 'number',
@@ -115,7 +113,6 @@ export class FriendsController {
     });
   }
 
-  @UseGuards(JwtAuthGuard)
   @ApiQuery({
     name: 'page',
     type: 'number',
