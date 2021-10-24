@@ -30,10 +30,6 @@ import { CreatedDto } from '@src/generic.dto';
   status: 500,
   description: 'Internal server error',
 })
-@ApiResponse({
-  status: 400,
-  description: 'Bad request',
-})
 @ApiBearerAuth()
 @ApiTags('Events')
 @Controller('events')

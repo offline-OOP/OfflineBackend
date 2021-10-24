@@ -23,3 +23,9 @@ export enum DirectionEnum {
   out = 'out',
   direction_both = 'direction_both',
 }
+
+export interface Coordinates {
+  x: number;
+  y: number;
+  z?: number;
+}
