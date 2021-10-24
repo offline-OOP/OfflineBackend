@@ -4,7 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { NeodeModule } from '@src/neo4j/neo4j.module';
 import EventsSchema from '@src/events/events.schema';
 import UserSchema from '@src/users/users.schema';
-import LineupsSchema from '@src/lineups/lineups.schema';
+import LineupsSchema from '@src/events/lineups/lineups.schema';
 
 describe('LineupsService', () => {
   let lineupsService: LineupsService;

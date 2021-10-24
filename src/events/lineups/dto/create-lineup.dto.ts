@@ -1,11 +1,10 @@
-import { IsDate, ValidateNested, IsString } from 'class-validator';
+import { IsDateString, ValidateNested, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { DateTime } from 'luxon';
 import { CoordinatesDto } from '@src/generic.dto';
-import { UserEntity } from '@src/users/user.entity';
 
 export class CreateLineupDto {
-  @IsDate()
+  @IsDateString()
   @ApiProperty({ example: DateTime.local() })
   datetime: DateTime;
 
@@ -14,8 +13,6 @@ export class CreateLineupDto {
   coordinates: CoordinatesDto;
 
   @ApiProperty({ example: 'Madison Square Garden' })
+  @IsString()
   address: string;
-
-  @ApiProperty({ type: [UserEntity] })
-  participants: UserEntity[];
 }

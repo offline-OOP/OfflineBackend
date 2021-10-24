@@ -1,4 +1,4 @@
-import { CreateLineupDto } from '@src/lineups/dto/create-lineup.dto';
+import { CreateLineupDto } from '@src/events/lineups/dto/create-lineup.dto';
 import { IsOptional } from 'class-validator';
 import { DateTime } from 'luxon';
 import { CoordinatesDto } from '@src/generic.dto';
@@ -13,7 +13,4 @@ export class UpdateLineupDto extends CreateLineupDto {
 
   @IsOptional()
   address: string;
-
-  @IsOptional()
-  participants: UserEntity[];
 }

@@ -8,7 +8,11 @@ import {
 import { Action } from '@src/generic.interface';
 import { UserInterface } from '@src/users/interfaces/users.interface';
 import { Injectable } from '@nestjs/common';
-import { Entity, Event } from '@src/casl/interfaces/policy-handler.interface';
+import {
+  Entity,
+  Event,
+  Lineup,
+} from '@src/casl/interfaces/policy-handler.interface';
 
 type Subjects = InferSubjects<typeof Entity> | 'all';
 
@@ -21,8 +25,14 @@ export class CaslAbilityFactory {
       Ability as AbilityClass<AppAbility>,
     );
 
+    // Event acl
     can(Action.UPDATE, Event, { ownerId: user.id });
     can(Action.DELETE, Event, { ownerId: user.id });
+
+    // Lineup acl
+    can(Action.CREATE, Lineup, { eventOwnerId: user.id });
+    can(Action.UPDATE, Lineup, { eventOwnerId: user.id });
+    can(Action.DELETE, Lineup, { eventOwnerId: user.id });
 
     return build({
       detectSubjectType: (item) =>

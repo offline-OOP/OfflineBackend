@@ -3,9 +3,9 @@ import {
   Controller,
   Post,
   Req,
-  UseGuards,
   Param,
   Put,
+  Delete,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -17,10 +17,11 @@ import {
 import { JwtAuthGuard } from '@src/auth/strategy/jwt-auth-guard';
 import { CreatedDto } from '@src/generic.dto';
 import { AuthenticatedUserRequest } from '@src/generic.interface';
-import { CreateLineupDto } from '@src/lineups/dto/create-lineup.dto';
-import { UpdateLineupDto } from '@src/lineups/dto/update-lineup.dto';
-import { LineupsService } from '@src/lineups/lineups.service';
-import { LineupsEntity } from '@src/lineups/lineups.entity';
+import { CreateLineupDto } from '@src/events/lineups/dto/create-lineup.dto';
+import { UpdateLineupDto } from '@src/events/lineups/dto/update-lineup.dto';
+import { LineupsService } from '@src/events/lineups/lineups.service';
+import { LineupsEntity } from '@src/events/lineups/lineups.entity';
+import { Acl } from '@src/casl/decorators/acl.decorator';
 
 @ApiBearerAuth()
 @ApiResponse({
@@ -31,8 +32,8 @@ import { LineupsEntity } from '@src/lineups/lineups.entity';
   status: 500,
   description: 'Internal server error',
 })
-@UseGuards(JwtAuthGuard)
-@ApiTags('Lineups')
+@Acl(JwtAuthGuard)
+@ApiTags('EventLineups')
 @Controller('events/:eventId/lineups')
 export class LineupsController {
   constructor(private lineupsService: LineupsService) {}
@@ -75,6 +76,7 @@ export class LineupsController {
     });
   }
 
+  @Delete(':id')
   @ApiResponse({
     status: 200,
     description: 'Success',

@@ -1,5 +1,5 @@
 import { UserInterface } from '@src/users/interfaces/users.interface';
-import { GenericLineupInterface } from '@src/lineups/interfaces/lineup.interface';
+import { GenericLineupInterface } from '@src/events/lineups/interfaces/lineup.interface';
 
 export interface CreateLineupInterface {
   eventId: string;

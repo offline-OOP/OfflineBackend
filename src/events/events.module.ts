@@ -6,10 +6,12 @@ import { NeodeModule } from '@src/neo4j/neo4j.module';
 import EventsSchema from '@src/events/events.schema';
 import UserSchema from '@src/users/users.schema';
 import { GetEventMiddleware } from '@src/events/middleware/events.middleware';
+import { LineupsModule } from '@src/events/lineups/lineups.module';
 
 @Module({
   imports: [
     CaslModule,
+    LineupsModule,
     NeodeModule.forFeature({ Event: EventsSchema, User: UserSchema }),
   ],
   controllers: [EventsController],
@@ -22,6 +24,9 @@ export class EventsModule {
       .forRoutes(
         { path: 'events/:id', method: RequestMethod.PUT },
         { path: 'events/:id', method: RequestMethod.DELETE },
+        { path: 'events/:eventId/lineups/:id', method: RequestMethod.POST },
+        { path: 'events/:eventId/lineups/:id', method: RequestMethod.PUT },
+        { path: 'events/:eventId/lineups/:id', method: RequestMethod.DELETE },
       );
   }
 }
