@@ -47,15 +47,14 @@ const EventsSchema: SchemaObject = {
     eager: true,
     cascade: 'delete',
   },
-  participants: {
+  lineups: {
     type: 'relationships',
-    target: 'User',
-    relationship: 'PARTICIPANT',
-    direction: 'in',
+    target: 'Event',
+    relationship: 'LINEUPS',
+    direction: 'out',
     properties: {
       id: 'string',
     },
-    cascade: 'delete',
     eager: true,
   },
 };

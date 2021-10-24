@@ -14,5 +14,4 @@ export interface GenericEventInterface {
 
 export interface FullEventInterface extends GenericEventInterface {
   owner: UserInterface;
-  participants: UserInterface[];
 }

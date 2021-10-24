@@ -39,6 +39,7 @@
     "handlebars": "^4.7.7",
     "install": "^0.13.0",
     "lodash": "^4.17.21",
+    "luxon": "^2.0.2",
     "mysql2": "^2.3.0",
     "neode": "^0.4.7",
     "nestjs-command": "^3.0.2",

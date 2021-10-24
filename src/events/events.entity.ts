@@ -30,9 +30,6 @@ export class EventEntity {
   @ApiProperty()
   owner: UserEntity;
 
-  @ApiProperty({ type: [UserEntity] })
-  participants: UserEntity[];
-
   constructor(partial: Partial<EventEntity>) {
     this.name = partial.name;
     this.category = partial.category;
@@ -43,8 +40,5 @@ export class EventEntity {
     this.age = partial.age;
     this.maxPerson = partial.maxPerson;
     this.owner = new UserEntity(partial.owner);
-    this.participants = partial.participants.map((user) => {
-      return new UserEntity(user);
-    });
   }
 }

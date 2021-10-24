@@ -33,10 +33,6 @@ import { RemoveEventHandler } from '@src/casl/policies/events/remove-event.handl
   status: 500,
   description: 'Internal server error',
 })
-@ApiResponse({
-  status: 400,
-  description: 'Bad request',
-})
 @ApiBearerAuth()
 @ApiTags('Events')
 @Controller('events')

@@ -18,3 +18,7 @@ export class Entity {
 export class Event extends Entity {
   ownerId: string;
 }
+
+export class Lineup extends Entity {
+  eventOwnerId: string;
+}
